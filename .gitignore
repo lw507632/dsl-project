@@ -132,7 +132,7 @@ local.properties
 
 # sbteclipse plugin
 .target
-
+*/target/*
 # Tern plugin
 .tern-project
 
@@ -326,3 +326,4 @@ xtend-gen/
 *.xml_gen
 
 # End of https://www.gitignore.io/api/git,java,linux,macos,xtext,maven,java-web,intellij,code-java,intellij+all
+/.idea/
