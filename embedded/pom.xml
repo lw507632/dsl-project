@@ -7,6 +7,7 @@
     <groupId>fr.unice.polytech.si.al.sdl</groupId>
     <artifactId>SDL</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <name>GroovuinoML: ArduinoML DSL embeded in Groovy</name>
 
@@ -19,12 +20,12 @@
     </properties>
 
     <dependencies>
-    <!--    <dependency>
+        <dependency>
             <groupId>io.github.mosser.arduinoml</groupId>
             <artifactId>kernel-jvm</artifactId>
             <version>1.0</version>
         </dependency>
-    -->
+
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
