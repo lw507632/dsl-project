@@ -4,14 +4,25 @@ import org.codehaus.groovy.control.CompilerConfiguration
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer
 
 class SauceGangDSL {
-    private GroovyShell shell
-    private CompilerConfiguration configuration
+
+    // for pretty print purpose
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_RESET = "\u001B[0m";
 
+    // groovy shell and its configuration to parse and interpret script
+    private GroovyShell shell
+    private CompilerConfiguration configuration
+
+    // definition of our binding and basescript
+    private SauceGangBinding binding
+    private SauceGangBasescript basescript
+
     SauceGangDSL() {
-        configuration = getDSLConfiguration()
+        // initialisation
         shell = new GroovyShell(configuration)
+        configuration = getDSLConfiguration()
+
+
     }
 
     private static CompilerConfiguration getDSLConfiguration() {
