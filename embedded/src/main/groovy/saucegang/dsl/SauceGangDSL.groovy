@@ -6,6 +6,8 @@ import org.codehaus.groovy.control.customizers.SecureASTCustomizer
 class SauceGangDSL {
     private GroovyShell shell
     private CompilerConfiguration configuration
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RESET = "\u001B[0m";
 
     SauceGangDSL() {
         configuration = getDSLConfiguration()
@@ -47,7 +49,7 @@ class SauceGangDSL {
 
 
     void eval(File scriptFile) {
-        println "SauceGangDSL::eval::IN"
+        println ANSI_GREEN + "SauceGangDSL::eval::IN -------------------------------------------------------" + ANSI_RESET
 
         Script script = shell.parse(scriptFile)
 
@@ -55,7 +57,7 @@ class SauceGangDSL {
         // script.setBinding(binding)
 
         script.run()
-        println "SauceGangDSL::eval::OUT"
+        println ANSI_GREEN + "SauceGangDSL::eval::OUT -------------------------------------------------------" + ANSI_RESET
 
     }
 }
