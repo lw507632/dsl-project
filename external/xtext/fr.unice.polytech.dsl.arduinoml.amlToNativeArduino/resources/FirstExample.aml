@@ -1,0 +1,6 @@
+App application{
+	Actuator act: 12
+	Sensor sens: 14
+	Actuator act2: 13
+	Actuator act3: 200
+}
