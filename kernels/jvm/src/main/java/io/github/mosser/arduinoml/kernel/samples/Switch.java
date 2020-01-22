@@ -10,64 +10,57 @@ import java.util.Arrays;
 
 public class Switch {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) {      // Declaring elementary bricks
+		Sensor button1 = new Sensor();
+		button1.setName("BUTTON1");
+		button1.setPin(9);      Sensor button2 = new Sensor();
+		button2.setName("BUTTON2");
+		button2.setPin(10);      Actuator buzzer = new Actuator();
+		buzzer.setName("LED");
+		buzzer.setPin(12);      // Declaring states
 
-		// Declaring elementary bricks
-		Sensor button = new Sensor();
-		button.setName("button");
-		button.setPin(9);
 
-		Actuator led = new Actuator();
-		led.setName("LED");
-		led.setPin(12);
+		State buttons_released = new State();
+		buttons_released.setName("buttons_released");
+		State buttons_pushed = new State();
+		buttons_pushed.setName("buttons_pushed");
 
-		// Declaring states
-		State on = new State();
-		on.setName("on");
+		Action switchTheBuzzerOn = new Action();
+		switchTheBuzzerOn.setActuator(buzzer);
+		switchTheBuzzerOn.setValue(SIGNAL.HIGH);
 
-		State off = new State();
-		off.setName("off");
+		Action switchTheBuzzerOff = new Action();
+		switchTheBuzzerOff.setActuator(buzzer);
+		switchTheBuzzerOff.setValue(SIGNAL.LOW);      // Binding actions to states
+		buttons_released.setActions(Arrays.asList(switchTheBuzzerOff));
+		buttons_pushed.setActions(Arrays.asList(switchTheBuzzerOn));      // Creating transitions
 
-		// Creating actions
-		Action switchTheLightOn = new Action();
-		switchTheLightOn.setActuator(led);
-		switchTheLightOn.setValue(SIGNAL.HIGH);
 
-		Action switchTheLightOff = new Action();
-		switchTheLightOff.setActuator(led);
-		switchTheLightOff.setValue(SIGNAL.LOW);
+		Transition released2pushed = new Transition();
+		released2pushed.setNext(buttons_pushed);
+		released2pushed.addSensor(button1);
+		released2pushed.addSensor(button2);
+		released2pushed.addValue(SIGNAL.HIGH);
+		released2pushed.addValue(SIGNAL.HIGH);
 
-		// Binding actions to states
-		on.setActions(Arrays.asList(switchTheLightOn));
-		off.setActions(Arrays.asList(switchTheLightOff));
+		Transition pushed2released = new Transition();
+		pushed2released.setNext(buttons_released);
+		pushed2released.addSensor(button1);
+		pushed2released.addValue(SIGNAL.LOW);      // Binding transitions to states
 
-		// Creating transitions
-		Transition on2off = new Transition();
-		on2off.setNext(off);
-		on2off.setSensor(button);
-		on2off.setValue(SIGNAL.HIGH);
+		buttons_released.setTransition(released2pushed);
+		buttons_pushed.setTransition(pushed2released);      // Building the App
 
-		Transition off2on = new Transition();
-		off2on.setNext(on);
-		off2on.setSensor(button);
-		off2on.setValue(SIGNAL.HIGH);
 
-		// Binding transitions to states
-		on.setTransition(on2off);
-		off.setTransition(off2on);
 
-		// Building the App
+
 		App theSwitch = new App();
 		theSwitch.setName("Switch!");
-		theSwitch.setBricks(Arrays.asList(button, led ));
-		theSwitch.setStates(Arrays.asList(on, off));
-		theSwitch.setInitial(off);
-
-		// Generating Code
+		theSwitch.setBricks(Arrays.asList(button1, button2, buzzer));
+		theSwitch.setStates(Arrays.asList(buttons_pushed, buttons_released));
+		theSwitch.setInitial(buttons_released);      // Generating Code
 		Visitor codeGenerator = new ToWiring();
-		theSwitch.accept(codeGenerator);
-
-		// Printing the generated code on the console
+		theSwitch.accept(codeGenerator);      // Printing the generated code on the console
 		System.out.println(codeGenerator.getResult());
 	}
 
