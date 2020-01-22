@@ -1,6 +1,7 @@
 App application{
 	Actuator act: 12
-	Sensor sens: 14
-	Actuator act2: 13
-	Actuator act3: 200
+	Sensor sens: 11
+	Sensor sensa: 13
+	Actuator actu: 14
+	Actuator acti: 10
 }

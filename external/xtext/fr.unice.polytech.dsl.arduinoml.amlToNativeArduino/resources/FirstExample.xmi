@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="ASCII"?>
 <arduinoml:App xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:arduinoml="http://www.example.org/arduinoml" name="application">
   <bricks xsi:type="arduinoml:Actuator" name="act" pin="12"/>
-  <bricks xsi:type="arduinoml:Sensor" name="sens" pin="14"/>
-  <bricks xsi:type="arduinoml:Actuator" name="act2" pin="13"/>
-  <bricks xsi:type="arduinoml:Actuator" name="act3" pin="200"/>
+  <bricks xsi:type="arduinoml:Sensor" name="sens" pin="11"/>
+  <bricks xsi:type="arduinoml:Sensor" name="sensa" pin="13"/>
+  <bricks xsi:type="arduinoml:Actuator" name="actu" pin="14"/>
+  <bricks xsi:type="arduinoml:Actuator" name="acti" pin="10"/>
 </arduinoml:App>
