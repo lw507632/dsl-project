@@ -39,6 +39,7 @@ public class Switch {
 		Transition released2pushed = new Transition();
 		released2pushed.setNext(buttons_pushed);
 		released2pushed.addSensor(button1);
+		released2pushed.addCondition(Condition.AND);
 		released2pushed.addSensor(button2);
 		released2pushed.addValue(SIGNAL.HIGH);
 		released2pushed.addValue(SIGNAL.HIGH);
@@ -46,6 +47,9 @@ public class Switch {
 		Transition pushed2released = new Transition();
 		pushed2released.setNext(buttons_released);
 		pushed2released.addSensor(button1);
+		pushed2released.addCondition(Condition.OR);
+		pushed2released.addSensor(button2);
+		pushed2released.addValue(SIGNAL.LOW);
 		pushed2released.addValue(SIGNAL.LOW);      // Binding transitions to states
 
 		buttons_released.setTransition(released2pushed);

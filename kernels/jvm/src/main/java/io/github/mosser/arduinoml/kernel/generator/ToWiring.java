@@ -77,10 +77,14 @@ public class ToWiring extends Visitor<StringBuffer> {
 		for(int i=0; i < transition.getSensors().size(); ++i){
 			conditions.append(String.format("digitalRead(%d) == %s",
 					transition.getSensors().get(i).getPin(), transition.getValues().get(i)));
-			conditions.append(" && ");
+
+			if(transition.getConditions().size() > i) {
+				Condition cond = transition.getConditions().get(i);
+				conditions.append((cond == Condition.AND) ? " && " : " || ");
+			}
 
 		}
-		conditions.append(" guard ) {");
+		conditions.append(" && guard ) {");
 		w(conditions.toString());
 
 		w("    time = millis();");
