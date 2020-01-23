@@ -8,6 +8,11 @@ public abstract class Brick implements NamedElement, Visitable {
 	private String name;
 	private int pin;
 
+	public Brick(String name, int pin) {
+		this.name = name;
+		this.pin = pin;
+	}
+
 	public int getPin() {
 		return pin;
 	}

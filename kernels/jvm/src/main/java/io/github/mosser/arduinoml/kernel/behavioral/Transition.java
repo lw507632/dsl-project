@@ -12,21 +12,20 @@ public class Transition implements Visitable {
 	private State next;
 	private List<Sensor> sensors;
 	private List<SIGNAL> values;
-	private List<Condition> conditions;
+	private Condition condition;
 
 
 	public Transition(){
 		sensors = new ArrayList<>();
 		values = new ArrayList<>();
-		conditions = new ArrayList<>();
 	}
 
 	public State getNext() {
 		return next;
 	}
 
-	public void setNext(State next) {
-		this.next = next;
+	public Transition setNext(State next) {
+		this.next = next; return this;
 	}
 
 	public List<Sensor> getSensors() {
@@ -45,16 +44,17 @@ public class Transition implements Visitable {
 		return values;
 	}
 
-	public List<Condition> getConditions(){
-		return conditions;
-	}
-
 	@Override
 	public void accept(Visitor visitor) {
 		visitor.visit(this);
 	}
 
-	public void addCondition(Condition cond) {
-		conditions.add(cond);
+	public Transition setCondition(Condition cond) {
+		this.condition = cond;
+		return this;
+	}
+
+	public Condition getCondition() {
+		return condition;
 	}
 }

@@ -1,6 +1,6 @@
 package io.github.mosser.arduinoml.kernel.structural;
 
 
-public enum Condition {
+public enum Operator {
     AND, OR
 }

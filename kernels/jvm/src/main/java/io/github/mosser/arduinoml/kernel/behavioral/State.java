@@ -13,6 +13,13 @@ public class State implements NamedElement, Visitable {
 	private List<Action> actions = new ArrayList<Action>();
 	private Transition transition;
 
+	public State(String name) {
+		this.name = name;
+	}
+
+	public State() {
+	}
+
 	@Override
 	public String getName() {
 		return name;
