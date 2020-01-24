@@ -18,6 +18,9 @@ public class ToWiring extends Visitor<StringBuffer> {
 	private void w(String s) {
 		result.append(String.format("%s\n",s));
 	}
+	private void w_in(String s) {
+		result.append(String.format("%s",s));
+	}
 
 	@Override
 	public void visit(App app) {
@@ -73,9 +76,9 @@ public class ToWiring extends Visitor<StringBuffer> {
 	@Override
 	public void visit(Transition transition) {
 
-		w("if( ");
+		w_in("if( ");
 		transition.getCondition().accept(this);
-		w(" && guard ) { ");
+		w_in(" && guard ) { \n");
 
 		w("    time = millis();");
 		w(String.format("    state_%s();",transition.getNext().getName()));
@@ -102,7 +105,7 @@ public class ToWiring extends Visitor<StringBuffer> {
 				stringBuilder.append((op == Operator.AND) ? " && " : " || ");
 			}
 		}
-		w(stringBuilder.toString());
+		w_in(stringBuilder.toString());
 
 	}
 }

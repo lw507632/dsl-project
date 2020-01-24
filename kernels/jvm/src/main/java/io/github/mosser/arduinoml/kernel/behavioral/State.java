@@ -46,6 +46,10 @@ public class State implements NamedElement, Visitable {
 		this.transition = transition;
 	}
 
+	public void addAction(Action action){
+		actions.add(action);
+	}
+
 	@Override
 	public void accept(Visitor visitor) {
 		visitor.visit(this);

@@ -49,6 +49,14 @@ public class App implements NamedElement, Visitable {
 		this.initial = initial;
 	}
 
+	public void addState(State state){
+		states.add(state);
+	}
+
+	public void addBrick(Brick brick){
+		bricks.add(brick);
+	}
+
 	@Override
 	public void accept(Visitor visitor) {
 		visitor.visit(this);

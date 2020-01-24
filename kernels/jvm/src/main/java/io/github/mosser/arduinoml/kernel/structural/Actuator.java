@@ -8,6 +8,9 @@ public class Actuator extends Brick {
 		super(name, pin);
 	}
 
+	public Actuator() {
+	}
+
 	@Override
 	public void accept(Visitor visitor) {
 		visitor.visit(this);

@@ -7,6 +7,9 @@ public class Sensor extends Brick {
 		super(name, pin);
 	}
 
+	public Sensor() {
+	}
+
 	@Override
 	public void accept(Visitor visitor) {
 		visitor.visit(this);
