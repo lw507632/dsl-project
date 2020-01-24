@@ -327,4 +327,5 @@ xtend-gen/
 
 # End of https://www.gitignore.io/api/git,java,linux,macos,xtext,maven,java-web,intellij,code-java,intellij+all
 
+/kernels/jvm/target
 ./kernels/jvm/target
