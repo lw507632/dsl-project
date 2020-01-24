@@ -10,16 +10,45 @@
   <testsDirectory xsi:nil="true"/>
   <genPackages prefix="Arduinoml" basePackage="fr.unice.polytech.dsl" disposableProviderFactory="true"
       ecorePackage="arduinoml.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="arduinoml.ecore#//SIGNAL">
+      <genEnumLiterals ecoreEnumLiteral="arduinoml.ecore#//SIGNAL/HIGH"/>
+      <genEnumLiterals ecoreEnumLiteral="arduinoml.ecore#//SIGNAL/LOW"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="arduinoml.ecore#//OPERATOR">
+      <genEnumLiterals ecoreEnumLiteral="arduinoml.ecore#//OPERATOR/AND"/>
+      <genEnumLiterals ecoreEnumLiteral="arduinoml.ecore#//OPERATOR/OR"/>
+    </genEnums>
     <genClasses ecoreClass="arduinoml.ecore#//NamedElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute arduinoml.ecore#//NamedElement/name"/>
     </genClasses>
     <genClasses ecoreClass="arduinoml.ecore#//App">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference arduinoml.ecore#//App/bricks"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference arduinoml.ecore#//App/states"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference arduinoml.ecore#//App/conditions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference arduinoml.ecore#//App/transitions"/>
     </genClasses>
     <genClasses ecoreClass="arduinoml.ecore#//Brick">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute arduinoml.ecore#//Brick/pin"/>
     </genClasses>
     <genClasses ecoreClass="arduinoml.ecore#//Sensor"/>
     <genClasses ecoreClass="arduinoml.ecore#//Actuator"/>
+    <genClasses ecoreClass="arduinoml.ecore#//Transition">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference arduinoml.ecore#//Transition/next"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference arduinoml.ecore#//Transition/condition"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference arduinoml.ecore#//Transition/previous"/>
+    </genClasses>
+    <genClasses ecoreClass="arduinoml.ecore#//State">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference arduinoml.ecore#//State/actions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference arduinoml.ecore#//State/transitions"/>
+    </genClasses>
+    <genClasses ecoreClass="arduinoml.ecore#//Condition">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference arduinoml.ecore#//Condition/sensors"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute arduinoml.ecore#//Condition/values"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute arduinoml.ecore#//Condition/operators"/>
+    </genClasses>
+    <genClasses ecoreClass="arduinoml.ecore#//Action">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference arduinoml.ecore#//Action/actuator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute arduinoml.ecore#//Action/value"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>
