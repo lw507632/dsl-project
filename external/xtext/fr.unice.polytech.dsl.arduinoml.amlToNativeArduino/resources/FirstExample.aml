@@ -1,5 +1,6 @@
 App app{
 	Sensor button : 10
+	Sensor button2 : 9
 	Actuator a1 : 11
 	Actuator a2 : 12
 	
