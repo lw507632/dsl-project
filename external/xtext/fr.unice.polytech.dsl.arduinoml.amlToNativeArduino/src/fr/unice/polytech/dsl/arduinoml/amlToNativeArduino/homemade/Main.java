@@ -14,7 +14,7 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 
 import com.google.inject.Injector;
 
-import fr.unice.polytech.dsl.arduinoml.AmlStandaloneSetup;
+import fr.unice.polytech.dsl.arduinoml.aml.AmlStandaloneSetup;
 import fr.unice.polytech.dsl.arduinoml.App;
 import fr.unice.polytech.dsl.arduinoml.ArduinomlPackage;
 import fr.unice.polytech.dsl.arduinoml.homemade.ArduinomlSwitchPrinter;
