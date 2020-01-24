@@ -17,6 +17,7 @@
   </states>
   <conditions name="c1" sensors="//@bricks.0 //@bricks.1">
     <values>HIGH</values>
+    <values>HIGH</values>
     <operators>AND</operators>
   </conditions>
   <transitions next="//@states.1" condition="//@conditions.0" previous="//@states.0"/>

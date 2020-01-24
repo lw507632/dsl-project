@@ -35,10 +35,10 @@
   <eClassifiers xsi:type="ecore:EClass" name="Condition" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="sensors" lowerBound="1"
         upperBound="-1" eType="#//Sensor"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="values" lowerBound="1"
-        upperBound="-1" eType="#//SIGNAL"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operators" upperBound="-1"
-        eType="#//OPERATOR"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="values" unique="false"
+        lowerBound="1" upperBound="-1" eType="#//SIGNAL"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operators" unique="false"
+        upperBound="-1" eType="#//OPERATOR"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Action" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="actuator" lowerBound="1"
