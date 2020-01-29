@@ -1,11 +1,15 @@
 package saucegang.dsl
 
+import io.github.mosser.arduinoml.kernel.structural.SIGNAL
 import org.codehaus.groovy.control.CompilerConfiguration
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer
 
 class SauceGangDSL {
+    private GroovyShell shell
+    private CompilerConfiguration configuration
+    private SauceGangBinding binding
+    private SauceGangBaseScript basescript
 
-    // for pretty print purpose
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_RESET = "\u001B[0m";
 
@@ -18,11 +22,13 @@ class SauceGangDSL {
     private SauceGangBasescript basescript
 
     SauceGangDSL() {
-        // initialisation
-        shell = new GroovyShell(configuration)
+        binding = new SauceGangBinding()
+        binding.setSauceGangModel(new SauceGangModel(binding));
         configuration = getDSLConfiguration()
-
-
+        configuration.setScriptBaseClass("saucegang.dsl.SauceGangBaseScript")
+        shell = new GroovyShell(configuration)
+        binding.setVariable("high", SIGNAL.HIGH)
+        binding.setVariable("low", SIGNAL.LOW)
     }
 
     private static CompilerConfiguration getDSLConfiguration() {
@@ -64,8 +70,8 @@ class SauceGangDSL {
 
         Script script = shell.parse(scriptFile)
 
-        // binding.setScript(script)
-        // script.setBinding(binding)
+         binding.setScript(script)
+         script.setBinding(binding)
 
         script.run()
         println ANSI_GREEN + "SauceGangDSL::eval::OUT -------------------------------------------------------" + ANSI_RESET
