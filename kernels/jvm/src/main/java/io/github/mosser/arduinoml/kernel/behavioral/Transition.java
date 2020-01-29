@@ -14,6 +14,8 @@ public class Transition implements Visitable {
 	private List<SIGNAL> values;
 	private Condition condition;
 
+	private MultipleCondition multipleCondition;
+
 
 	public Transition(){
 		sensors = new ArrayList<>();
@@ -54,7 +56,15 @@ public class Transition implements Visitable {
 		return this;
 	}
 
+	public void setMultipleCondition(MultipleCondition multipleCondition){
+		this.multipleCondition = multipleCondition;
+	}
+
 	public Condition getCondition() {
 		return condition;
+	}
+
+	public MultipleCondition getMultipleCondition() {
+		return multipleCondition;
 	}
 }

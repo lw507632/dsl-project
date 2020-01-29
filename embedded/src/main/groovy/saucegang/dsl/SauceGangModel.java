@@ -57,8 +57,8 @@ class SauceGangModel {
     public void createTransition(State from, State to, Sensor sensor, SIGNAL value) {
         Transition transition = new Transition();
         transition.setNext(to);
-        transition.setSensor(sensor);
-        transition.setValue(value);
+        transition.addSensor(sensor);
+        transition.addValue(value);
         from.setTransition(transition);
     }
 

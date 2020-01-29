@@ -4,6 +4,9 @@ import io.github.mosser.arduinoml.kernel.App;
 import io.github.mosser.arduinoml.kernel.behavioral.*;
 import io.github.mosser.arduinoml.kernel.structural.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Quick and dirty visitor to support the generation of Wiring code
  */
@@ -77,7 +80,7 @@ public class ToWiring extends Visitor<StringBuffer> {
 	public void visit(Transition transition) {
 
 		w_in("if( ");
-		transition.getCondition().accept(this);
+		transition.getMultipleCondition().accept(this);
 		w_in(" && guard ) { \n");
 
 		w("    time = millis();");
@@ -97,6 +100,7 @@ public class ToWiring extends Visitor<StringBuffer> {
 	public void visit(Condition condition) {
 		StringBuilder stringBuilder = new StringBuilder();
 		for(int i=0; i < condition.getSensors().size(); ++i){
+			//TODO : if analog, then analogRead()
 			stringBuilder.append(String.format("digitalRead(%d) == %s",
 					condition.getSensors().get(i).getPin(), condition.getValues().get(i)));
 
@@ -106,6 +110,28 @@ public class ToWiring extends Visitor<StringBuffer> {
 			}
 		}
 		w_in(stringBuilder.toString());
+	}
 
+	public void visit(MultipleCondition multipleCondition){
+		StringBuilder stringBuilder = new StringBuilder();
+		List<SimpleCondition> simpleConditionList = multipleCondition.getConditionList();
+		for(int i=0; i< multipleCondition.getConditionList().size(); ++i){
+			SimpleCondition simpleCondition = simpleConditionList.get(i);
+			if(simpleCondition.getSensorType().equals(SensorType.DIGITAL)){
+				stringBuilder.append(String.format("digitalRead(%d) == %s",
+						simpleCondition.getSens().getPin(), simpleCondition.getValue()));
+			}
+			else{
+				stringBuilder.append(String.format("analogRead(%d)",simpleCondition.getSens().getPin()));
+				stringBuilder.append(simpleCondition.getComparator());
+				stringBuilder.append(String.format("%s", simpleCondition.getValue()));
+			}
+
+			if(multipleCondition.getOperators().size() > i) {
+				Operator op = multipleCondition.getOperators().get(i);
+				stringBuilder.append((op == Operator.AND) ? " && " : " || ");
+			}
+		}
+		w_in(stringBuilder.toString());
 	}
 }
