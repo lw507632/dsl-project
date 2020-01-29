@@ -14,7 +14,7 @@ import io.github.mosser.arduinoml.kernel.structural.Sensor;
 
 import java.util.Arrays;
 
-public class Scenario4 {
+public class Scenario_4 {
     public static void main(String[] args) {
         // Declaring elementary bricks
         Sensor button1 = new Sensor("BUTTON1", 9);
@@ -37,6 +37,7 @@ public class Scenario4 {
         buzzer_on.setActions(Arrays.asList(switchTheBuzzerOn));
         led_on.setActions(Arrays.asList(switchTheBuzzerOff, switchTheLedOn));
         initial.setActions(Arrays.asList(switchTheLedOff));
+
 
         // Condition
         Condition button_pushed = new Condition();

@@ -2,15 +2,14 @@ package saucegang.dsl;
 
 import groovy.lang.Binding;
 import io.github.mosser.arduinoml.kernel.App;
-import io.github.mosser.arduinoml.kernel.behavioral.Action;
-import io.github.mosser.arduinoml.kernel.behavioral.State;
-import io.github.mosser.arduinoml.kernel.behavioral.Transition;
+import io.github.mosser.arduinoml.kernel.behavioral.*;
 import io.github.mosser.arduinoml.kernel.generator.ToWiring;
 import io.github.mosser.arduinoml.kernel.generator.Visitor;
 import io.github.mosser.arduinoml.kernel.structural.Actuator;
 import io.github.mosser.arduinoml.kernel.structural.Brick;
 import io.github.mosser.arduinoml.kernel.structural.SIGNAL;
 import io.github.mosser.arduinoml.kernel.structural.Sensor;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,8 +56,10 @@ class SauceGangModel {
     public void createTransition(State from, State to, Sensor sensor, SIGNAL value) {
         Transition transition = new Transition();
         transition.setNext(to);
-        transition.addSensor(sensor);
-        transition.addValue(value);
+        SimpleCondition simpleCondition = new SimpleCondition(Comparator.EQUALS, sensor, value.toString());
+        MultipleCondition multipleCondition = new MultipleCondition();
+        multipleCondition.addCondition(simpleCondition);
+        transition.setCondition(multipleCondition);
         from.setTransition(transition);
     }
 

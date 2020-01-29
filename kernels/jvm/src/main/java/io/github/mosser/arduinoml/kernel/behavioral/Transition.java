@@ -12,7 +12,7 @@ public class Transition implements Visitable {
 	private State next;
 	private List<Sensor> sensors;
 	private List<SIGNAL> values;
-	private Condition condition;
+	private MultipleCondition condition;
 
 	private MultipleCondition multipleCondition;
 
@@ -51,7 +51,7 @@ public class Transition implements Visitable {
 		visitor.visit(this);
 	}
 
-	public Transition setCondition(Condition cond) {
+	public Transition setCondition(MultipleCondition cond) {
 		this.condition = cond;
 		return this;
 	}
@@ -60,7 +60,7 @@ public class Transition implements Visitable {
 		this.multipleCondition = multipleCondition;
 	}
 
-	public Condition getCondition() {
+	public MultipleCondition getCondition() {
 		return condition;
 	}
 
