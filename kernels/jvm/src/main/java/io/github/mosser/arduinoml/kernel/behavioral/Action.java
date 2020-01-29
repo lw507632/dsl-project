@@ -10,6 +10,13 @@ public class Action implements Visitable {
 	private SIGNAL value;
 	private Actuator actuator;
 
+	public Action(Actuator actuator,SIGNAL value) {
+		this.value = value;
+		this.actuator = actuator;
+	}
+
+	public Action() {
+	}
 
 	public SIGNAL getValue() {
 		return value;

@@ -412,4 +412,5 @@ modules.xml
 
 # End of https://www.gitignore.io/api/intellij+iml
 
+/kernels/jvm/target
 ./kernels/jvm/target

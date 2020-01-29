@@ -1,6 +1,16 @@
-App application{
-	Actuator act: 12
-	Sensor sens: 14
-	Actuator act2: 13
-	Actuator act3: 200
+App app{
+	Sensor button : 10
+	Sensor button2 : 9
+	Actuator a1 : 11
+	Actuator a2 : 12
+	
+	State initial : a1 => LOW, a2 => LOW
+	State a1_on : a1 => HIGH
+	State a2_on : a2 => HIGH, a1 => LOW
+	
+	Condition c1 : button is HIGH AND button2 is HIGH
+	
+	initial -- c1 --> a1_on
+	a1_on -- c1 --> a2_on
+	a2_on -- c1 --> initial
 }

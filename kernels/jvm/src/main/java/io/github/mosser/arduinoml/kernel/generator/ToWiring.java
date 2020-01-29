@@ -18,6 +18,9 @@ public class ToWiring extends Visitor<StringBuffer> {
 	private void w(String s) {
 		result.append(String.format("%s\n",s));
 	}
+	private void w_in(String s) {
+		result.append(String.format("%s",s));
+	}
 
 	@Override
 	public void visit(App app) {
@@ -73,19 +76,9 @@ public class ToWiring extends Visitor<StringBuffer> {
 	@Override
 	public void visit(Transition transition) {
 
-		StringBuilder conditions = new StringBuilder("if( ");
-		for(int i=0; i < transition.getSensors().size(); ++i){
-			conditions.append(String.format("digitalRead(%d) == %s",
-					transition.getSensors().get(i).getPin(), transition.getValues().get(i)));
-
-			if(transition.getConditions().size() > i) {
-				Condition cond = transition.getConditions().get(i);
-				conditions.append((cond == Condition.AND) ? " && " : " || ");
-			}
-
-		}
-		conditions.append(" && guard ) {");
-		w(conditions.toString());
+		w_in("if( ");
+		transition.getCondition().accept(this);
+		w_in(" && guard ) { \n");
 
 		w("    time = millis();");
 		w(String.format("    state_%s();",transition.getNext().getName()));
@@ -100,4 +93,19 @@ public class ToWiring extends Visitor<StringBuffer> {
 		w(String.format("  digitalWrite(%d,%s);",action.getActuator().getPin(),action.getValue()));
 	}
 
+	@Override
+	public void visit(Condition condition) {
+		StringBuilder stringBuilder = new StringBuilder();
+		for(int i=0; i < condition.getSensors().size(); ++i){
+			stringBuilder.append(String.format("digitalRead(%d) == %s",
+					condition.getSensors().get(i).getPin(), condition.getValues().get(i)));
+
+			if(condition.getOperators().size() > i) {
+				Operator op = condition.getOperators().get(i);
+				stringBuilder.append((op == Operator.AND) ? " && " : " || ");
+			}
+		}
+		w_in(stringBuilder.toString());
+
+	}
 }

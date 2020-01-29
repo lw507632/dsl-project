@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="ASCII"?>
-<arduinoml:App xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:arduinoml="http://www.example.org/arduinoml" name="application">
-  <bricks xsi:type="arduinoml:Actuator" name="act" pin="12"/>
-  <bricks xsi:type="arduinoml:Sensor" name="sens" pin="14"/>
-  <bricks xsi:type="arduinoml:Actuator" name="act2" pin="13"/>
-  <bricks xsi:type="arduinoml:Actuator" name="act3" pin="200"/>
+<arduinoml:App xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:arduinoml="http://www.example.org/arduinoml" name="app">
+  <bricks xsi:type="arduinoml:Sensor" name="button" pin="10"/>
+  <bricks xsi:type="arduinoml:Sensor" name="button2" pin="9"/>
+  <bricks xsi:type="arduinoml:Actuator" name="a1" pin="11"/>
+  <bricks xsi:type="arduinoml:Actuator" name="a2" pin="12"/>
+  <states name="initial">
+    <actions actuator="//@bricks.2" value="LOW"/>
+    <actions actuator="//@bricks.3" value="LOW"/>
+  </states>
+  <states name="a1_on">
+    <actions actuator="//@bricks.2"/>
+  </states>
+  <states name="a2_on">
+    <actions actuator="//@bricks.3"/>
+    <actions actuator="//@bricks.2" value="LOW"/>
+  </states>
+  <conditions name="c1" sensors="//@bricks.0 //@bricks.1">
+    <values>HIGH</values>
+    <values>HIGH</values>
+    <operators>AND</operators>
+  </conditions>
+  <transitions next="//@states.1" condition="//@conditions.0" previous="//@states.0"/>
+  <transitions next="//@states.2" condition="//@conditions.0" previous="//@states.1"/>
+  <transitions next="//@states.0" condition="//@conditions.0" previous="//@states.2"/>
 </arduinoml:App>
