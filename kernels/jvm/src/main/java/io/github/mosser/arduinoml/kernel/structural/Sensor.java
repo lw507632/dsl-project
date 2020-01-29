@@ -16,6 +16,7 @@ public class Sensor extends Brick {
 	}
 
 	public Sensor() {
+		type = SensorType.DIGITAL;
 	}
 
 	@Override

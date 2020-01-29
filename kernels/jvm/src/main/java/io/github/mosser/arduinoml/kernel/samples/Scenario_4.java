@@ -2,18 +2,17 @@ package io.github.mosser.arduinoml.kernel.samples;
 
 
 import io.github.mosser.arduinoml.kernel.App;
-import io.github.mosser.arduinoml.kernel.behavioral.Action;
-import io.github.mosser.arduinoml.kernel.behavioral.Condition;
-import io.github.mosser.arduinoml.kernel.behavioral.State;
-import io.github.mosser.arduinoml.kernel.behavioral.Transition;
+import io.github.mosser.arduinoml.kernel.behavioral.*;
 import io.github.mosser.arduinoml.kernel.generator.ToWiring;
 import io.github.mosser.arduinoml.kernel.generator.Visitor;
 import io.github.mosser.arduinoml.kernel.structural.Actuator;
 import io.github.mosser.arduinoml.kernel.structural.SIGNAL;
 import io.github.mosser.arduinoml.kernel.structural.Sensor;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 
 import java.util.Arrays;
 
+@Ignore
 public class Scenario_4 {
     public static void main(String[] args) {
         // Declaring elementary bricks
@@ -39,25 +38,26 @@ public class Scenario_4 {
         initial.setActions(Arrays.asList(switchTheLedOff));
 
 
-        // Condition
-        Condition button_pushed = new Condition();
-        button_pushed.addSensor(button1, SIGNAL.HIGH);
+        SimpleCondition simpleConditionButtonOn = new SimpleCondition(Comparator.EQUALS, button1, "HIGH");
+        MultipleCondition multipleConditionButtonOn = new MultipleCondition();
+        multipleConditionButtonOn.addCondition(simpleConditionButtonOn);
 
-        // Transition
+
+        // Transitions
         Transition initial2buzz = new Transition();
         Transition buzz2led = new Transition();
         Transition led2initial = new Transition();
 
-        initial2buzz.setNext(buzzer_on).setCondition(button_pushed);
-        buzz2led.setNext(led_on).setCondition(button_pushed);
-        led2initial.setNext(initial).setCondition(button_pushed);
+        initial2buzz.setNext(buzzer_on).setMultipleCondition(multipleConditionButtonOn);
+        buzz2led.setNext(led_on).setMultipleCondition(multipleConditionButtonOn);
+        led2initial.setNext(initial).setMultipleCondition(multipleConditionButtonOn);
 
         initial.setTransition(initial2buzz);
         buzzer_on.setTransition(buzz2led);
         led_on.setTransition(led2initial);
 
         App theSwitch = new App();
-        theSwitch.setName("Scenario 4");
+        theSwitch.setName("Scenario 4!");
         theSwitch.setBricks(Arrays.asList(button1,led,buzzer));
         theSwitch.setStates(Arrays.asList(initial, led_on, buzzer_on));
         theSwitch.setInitial(initial);      // Generating Code

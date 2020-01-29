@@ -56,13 +56,19 @@ public class Scenario_1 {
 		// Creating transitions
 		Transition released2pushed = new Transition();
 		released2pushed.setNext(button_pushed);
-		released2pushed.addSensor(button);
-		released2pushed.addValue(SIGNAL.HIGH);
+		SimpleCondition simpleButtonPushedCondition = new SimpleCondition(Comparator.EQUALS, button, "HIGH");
+		MultipleCondition multipleCondition = new MultipleCondition();
+		multipleCondition.addCondition(simpleButtonPushedCondition);
+		released2pushed.setMultipleCondition(multipleCondition);
+
 
 		Transition pushed2released = new Transition();
 		pushed2released.setNext(button_released);
-		pushed2released.addSensor(button);
-		pushed2released.addValue(SIGNAL.LOW);
+		SimpleCondition simpleButtonReleasedCondition = new SimpleCondition(Comparator.EQUALS, button, "LOW");
+		MultipleCondition multipleCondition2 = new MultipleCondition();
+		multipleCondition2.addCondition(simpleButtonReleasedCondition);
+		pushed2released.setMultipleCondition(multipleCondition2);
+
 
 		// Binding transitions to states
 		button_released.setTransition(released2pushed);
@@ -70,7 +76,7 @@ public class Scenario_1 {
 
 		// Building the App
 		App theSwitch = new App();
-		theSwitch.setName("Switch!");
+		theSwitch.setName("Scenario 1!");
 		theSwitch.setBricks(Arrays.asList(button, led, buzzer));
 		theSwitch.setStates(Arrays.asList(button_pushed, button_released));
 		theSwitch.setInitial(button_released);

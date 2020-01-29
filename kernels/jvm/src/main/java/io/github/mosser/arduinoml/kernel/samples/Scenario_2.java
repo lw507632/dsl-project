@@ -1,18 +1,18 @@
 package io.github.mosser.arduinoml.kernel.samples;
 
 import io.github.mosser.arduinoml.kernel.App;
-import io.github.mosser.arduinoml.kernel.behavioral.Action;
-import io.github.mosser.arduinoml.kernel.behavioral.Condition;
-import io.github.mosser.arduinoml.kernel.behavioral.State;
-import io.github.mosser.arduinoml.kernel.behavioral.Transition;
+import io.github.mosser.arduinoml.kernel.behavioral.*;
 import io.github.mosser.arduinoml.kernel.generator.ToWiring;
 import io.github.mosser.arduinoml.kernel.generator.Visitor;
 import io.github.mosser.arduinoml.kernel.structural.Actuator;
+import io.github.mosser.arduinoml.kernel.structural.Operator;
 import io.github.mosser.arduinoml.kernel.structural.SIGNAL;
 import io.github.mosser.arduinoml.kernel.structural.Sensor;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 
 import java.util.Arrays;
 
+@Ignore
 public class Scenario_2 {
 
     public static void main(String[] args) {
@@ -55,30 +55,31 @@ public class Scenario_2 {
         // Creating transitions
         Transition released2pushed = new Transition();
         released2pushed.setNext(buttons_pushed);
-        released2pushed.addSensor(button1);
-        released2pushed.addCondition(Condition.AND);
-
-
-        released2pushed.addSensor(button2);
-        released2pushed.addValue(SIGNAL.HIGH);
-        released2pushed.addValue(SIGNAL.HIGH);
-
-        // Condition
-        Condition button2_pushed = new Condition();
-        button2_pushed.addSensor(button2, SIGNAL.HIGH);
+        SimpleCondition simpleButton1PushedCondition = new SimpleCondition(Comparator.EQUALS, button1, "HIGH");
+        SimpleCondition simpleButton2PushedCondition = new SimpleCondition(Comparator.EQUALS, button2, "HIGH");
+        MultipleCondition multipleCondition = new MultipleCondition();
+        multipleCondition.addCondition(simpleButton1PushedCondition);
+        multipleCondition.addCondition(simpleButton2PushedCondition);
+        multipleCondition.addOperator(Operator.AND);
+        released2pushed.setMultipleCondition(multipleCondition);
 
 
         Transition pushed2released = new Transition();
         pushed2released.setNext(buttons_released);
-        pushed2released.addSensor(button1);
-        pushed2released.addCondition(Condition.OR);
-        pushed2released.addSensor(button2);
-        pushed2released.addValue(SIGNAL.LOW);
-        pushed2released.addValue(SIGNAL.LOW);      // Binding transitions to states
+        SimpleCondition simpleButton1ReleasedCondition = new SimpleCondition(Comparator.EQUALS, button1, "LOW");
+        SimpleCondition simpleButton2ReleasedCondition = new SimpleCondition(Comparator.EQUALS, button2, "LOW");
+        MultipleCondition multipleConditionReleased = new MultipleCondition();
+        multipleConditionReleased.addCondition(simpleButton1ReleasedCondition);
+        multipleConditionReleased.addCondition(simpleButton2ReleasedCondition);
+        multipleConditionReleased.addOperator(Operator.OR);
+        pushed2released.setMultipleCondition(multipleConditionReleased);
+
         buttons_released.setTransition(released2pushed);
         buttons_pushed.setTransition(pushed2released);      // Building the App
+
+
         App theSwitch = new App();
-        theSwitch.setName("Switch!");
+        theSwitch.setName("Scenario 2!");
         theSwitch.setBricks(Arrays.asList(button1, button2, buzzer));
         theSwitch.setStates(Arrays.asList(buttons_pushed, buttons_released));
         theSwitch.setInitial(buttons_released);      // Generating Code

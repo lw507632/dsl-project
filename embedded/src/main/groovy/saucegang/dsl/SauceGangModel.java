@@ -53,12 +53,9 @@ class SauceGangModel {
         this.binding.setVariable(name, state);
     }
 
-    public void createTransition(State from, State to, Sensor sensor, SIGNAL value) {
+    public void createTransition(State from, State to, MultipleCondition multipleCondition) {
         Transition transition = new Transition();
         transition.setNext(to);
-        SimpleCondition simpleCondition = new SimpleCondition(Comparator.EQUALS, sensor, value.toString());
-        MultipleCondition multipleCondition = new MultipleCondition();
-        multipleCondition.addCondition(simpleCondition);
         transition.setCondition(multipleCondition);
         from.setTransition(transition);
     }

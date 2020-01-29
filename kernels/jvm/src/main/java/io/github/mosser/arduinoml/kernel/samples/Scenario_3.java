@@ -42,15 +42,21 @@ public class Scenario_3 {
 		off.setActions(Arrays.asList(switchTheLightOff));
 
 		// Creating transitions
+
+		SimpleCondition simpleConditionButtonOn = new SimpleCondition(Comparator.EQUALS, button, "HIGH");
+		MultipleCondition multipleCondition = new MultipleCondition();
+		multipleCondition.addCondition(simpleConditionButtonOn);
+
+
 		Transition on2off = new Transition();
-		on2off.setNext(off);
-		on2off.addSensor(button);
-		on2off.addValue(SIGNAL.HIGH);
+		on2off.setNext(on);
+		on2off.setMultipleCondition(multipleCondition);
+
 
 		Transition off2on = new Transition();
 		off2on.setNext(on);
-		off2on.addSensor(button);
-		off2on.addValue(SIGNAL.HIGH);
+		off2on.setMultipleCondition(multipleCondition);
+
 
 		// Binding transitions to states
 		on.setTransition(on2off);
@@ -58,7 +64,7 @@ public class Scenario_3 {
 
 		// Building the App
 		App theSwitch = new App();
-		theSwitch.setName("Switch!");
+		theSwitch.setName("Scenario 3!");
 		theSwitch.setBricks(Arrays.asList(button, led ));
 		theSwitch.setStates(Arrays.asList(on, off));
 		theSwitch.setInitial(off);
