@@ -13,14 +13,6 @@ class SauceGangDSL {
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_RESET = "\u001B[0m";
 
-    // groovy shell and its configuration to parse and interpret script
-    private GroovyShell shell
-    private CompilerConfiguration configuration
-
-    // definition of our binding and basescript
-    private SauceGangBinding binding
-    private SauceGangBasescript basescript
-
     SauceGangDSL() {
         binding = new SauceGangBinding()
         binding.setSauceGangModel(new SauceGangModel(binding));
