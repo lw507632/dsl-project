@@ -41,17 +41,22 @@ abstract class SauceGangBaseScript extends Script {
     def initial(state) {
         ((SauceGangBinding) this.getBinding()).getSauceGangModel().setInitialState(state instanceof String ? (State) ((SauceGangBinding) this.getBinding()).getVariable(state) : (State) state)
     }
+
+    def closure = {
+        state1, state2, signal, sensor ->
+                ((SauceGangBinding) this.getBinding()).getSauceGangModel().createTransition(
+                        state1 instanceof String ? (State) ((SauceGangBinding) this.getBinding()).getVariable(state1) : (State) state1,
+                        state2 instanceof String ? (State) ((SauceGangBinding) this.getBinding()).getVariable(state2) : (State) state2,
+                        createCondition(sensor instanceof String ? (Sensor) ((SauceGangBinding) this.getBinding()).getVariable(sensor) : (Sensor) sensor,
+                                (String) signal));
+    }
+
+
     // from state1 to state2 when sensor becomes signal
     def from(state1) {
         [to: { state2 ->
             [when: { sensor ->
-                [becomes: { signal ->
-                    ((SauceGangBinding) this.getBinding()).getSauceGangModel().createTransition(
-                            state1 instanceof String ? (State) ((SauceGangBinding) this.getBinding()).getVariable(state1) : (State) state1,
-                            state2 instanceof String ? (State) ((SauceGangBinding) this.getBinding()).getVariable(state2) : (State) state2,
-                            createCondition(sensor instanceof String ? (Sensor) ((SauceGangBinding) this.getBinding()).getVariable(sensor) : (Sensor) sensor,
-                            (String) signal));
-                }]
+                [becomes: {signal -> closure(state1, state2, signal, sensor)}]
             }]
         }]
     };
