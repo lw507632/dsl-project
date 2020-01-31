@@ -14,6 +14,7 @@ public class App implements NamedElement, Visitable {
 	private List<Brick> bricks = new ArrayList<Brick>();
 	private List<State> states = new ArrayList<State>();
 	private State initial;
+	private boolean enableTemperature = false;
 
 	@Override
 	public String getName() {

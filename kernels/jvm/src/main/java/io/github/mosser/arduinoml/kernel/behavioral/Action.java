@@ -7,22 +7,30 @@ import io.github.mosser.arduinoml.kernel.structural.SIGNAL;
 
 public class Action implements Visitable {
 
-	private SIGNAL value;
+	private String value;
 	private Actuator actuator;
 
-	public Action(Actuator actuator,SIGNAL value) {
+	public Action(Actuator actuator,String value) {
 		this.value = value;
+		this.actuator = actuator;
+	}
+
+	public Action(Actuator actuator,SIGNAL value) {
+		this.value = value.toString();
 		this.actuator = actuator;
 	}
 
 	public Action() {
 	}
 
-	public SIGNAL getValue() {
+	public String getValue() {
 		return value;
 	}
 
-	public void setValue(SIGNAL value) {
+	public void setValue(SIGNAL signal){
+		this.value = signal.toString();
+	}
+	public void setValue(String value) {
 		this.value = value;
 	}
 

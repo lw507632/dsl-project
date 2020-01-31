@@ -8,11 +8,9 @@ import io.github.mosser.arduinoml.kernel.generator.Visitor;
 import io.github.mosser.arduinoml.kernel.structural.Actuator;
 import io.github.mosser.arduinoml.kernel.structural.SIGNAL;
 import io.github.mosser.arduinoml.kernel.structural.Sensor;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 
 import java.util.Arrays;
 
-@Ignore
 public class Scenario_4 {
     public static void main(String[] args) {
         // Declaring elementary bricks

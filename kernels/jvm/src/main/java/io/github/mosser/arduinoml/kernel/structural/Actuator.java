@@ -8,6 +8,10 @@ public class Actuator extends Brick {
 		super(name, pin);
 	}
 
+	public Actuator(String name, int pin, BrickType type) {
+		super(name, pin, type);
+	}
+
 	public Actuator() {
 	}
 

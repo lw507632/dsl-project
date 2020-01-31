@@ -13,20 +13,12 @@ public class Scenario_3 {
 	public static void main(String[] args) {
 
 		// Declaring elementary bricks
-		Sensor button = new Sensor();
-		button.setName("button");
-		button.setPin(9);
-
-		Actuator led = new Actuator();
-		led.setName("LED");
-		led.setPin(12);
+		Sensor button = new Sensor("button", 9, BrickType.DIGITAL);
+		Actuator led = new Actuator("LED",12);
 
 		// Declaring states
-		State on = new State();
-		on.setName("on");
-
-		State off = new State();
-		off.setName("off");
+		State on = new State("on");
+		State off = new State("off");
 
 		// Creating actions
 		Action switchTheLightOn = new Action();

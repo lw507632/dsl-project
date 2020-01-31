@@ -4,7 +4,6 @@ import io.github.mosser.arduinoml.kernel.App;
 import io.github.mosser.arduinoml.kernel.behavioral.*;
 import io.github.mosser.arduinoml.kernel.structural.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -93,31 +92,23 @@ public class ToWiring extends Visitor<StringBuffer> {
 
 	@Override
 	public void visit(Action action) {
-		w(String.format("  digitalWrite(%d,%s);",action.getActuator().getPin(),action.getValue()));
+		switch (action.getActuator().getType()){
+			case DIGITAL:
+				w(String.format("  digitalWrite(%d,%s);",action.getActuator().getPin(),action.getValue()));
+				break;
+			case ANALOGICAL:
+				w(String.format("  analogWrite(%d,%s);",action.getActuator().getPin(),action.getValue()));
+				break;
+		}
 	}
 
 	@Override
-	public void visit(Condition condition) {
-		StringBuilder stringBuilder = new StringBuilder();
-		for(int i=0; i < condition.getSensors().size(); ++i){
-			//TODO : if analog, then analogRead()
-			stringBuilder.append(String.format("digitalRead(%d) == %s",
-					condition.getSensors().get(i).getPin(), condition.getValues().get(i)));
-
-			if(condition.getOperators().size() > i) {
-				Operator op = condition.getOperators().get(i);
-				stringBuilder.append((op == Operator.AND) ? " && " : " || ");
-			}
-		}
-		w_in(stringBuilder.toString());
-	}
-
 	public void visit(MultipleCondition multipleCondition){
 		StringBuilder stringBuilder = new StringBuilder();
 		List<SimpleCondition> simpleConditionList = multipleCondition.getConditionList();
 		for(int i=0; i< multipleCondition.getConditionList().size(); ++i){
 			SimpleCondition simpleCondition = simpleConditionList.get(i);
-			if(simpleCondition.getSensorType().equals(SensorType.DIGITAL)){
+			if(simpleCondition.getSensorType().equals(BrickType.DIGITAL)){
 				stringBuilder.append(String.format("digitalRead(%d) == %s",
 						simpleCondition.getSens().getPin(), simpleCondition.getValue()));
 			}
@@ -133,5 +124,17 @@ public class ToWiring extends Visitor<StringBuffer> {
 			}
 		}
 		w_in(stringBuilder.toString());
+	}
+
+	public String temperatureConversionFunction(){
+		return "float convertTemperature(int value){\n" +
+				"  float voltage = value * 5.0;\n" +
+				"  voltage /= 1024.0; \n" +
+				"  Serial.print(voltage); Serial.println(\" volts\");\n" +
+				"  float temperatureC = (voltage - 0.5) * 100 ;\n" +
+				"  Serial.print(temperatureC); \n" +
+				"  Serial.println(\" degrees C\");\n" +
+				"  return temperatureC;\n" +
+				" }";
 	}
 }
