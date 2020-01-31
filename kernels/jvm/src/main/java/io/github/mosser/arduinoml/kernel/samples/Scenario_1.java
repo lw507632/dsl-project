@@ -57,17 +57,13 @@ public class Scenario_1 {
 		Transition released2pushed = new Transition();
 		released2pushed.setNext(button_pushed);
 		SimpleCondition simpleButtonPushedCondition = new SimpleCondition(Comparator.EQUALS, button, "HIGH");
-		MultipleCondition multipleCondition = new MultipleCondition();
-		multipleCondition.addCondition(simpleButtonPushedCondition);
-		released2pushed.setMultipleCondition(multipleCondition);
+		released2pushed.setCondition(simpleButtonPushedCondition);
 
 
 		Transition pushed2released = new Transition();
 		pushed2released.setNext(button_released);
 		SimpleCondition simpleButtonReleasedCondition = new SimpleCondition(Comparator.EQUALS, button, "LOW");
-		MultipleCondition multipleCondition2 = new MultipleCondition();
-		multipleCondition2.addCondition(simpleButtonReleasedCondition);
-		pushed2released.setMultipleCondition(multipleCondition2);
+		pushed2released.setCondition(simpleButtonReleasedCondition);
 
 
 		// Binding transitions to states

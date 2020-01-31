@@ -59,7 +59,7 @@ public class Scenario_2 {
         multipleCondition.addCondition(simpleButton1PushedCondition);
         multipleCondition.addCondition(simpleButton2PushedCondition);
         multipleCondition.addOperator(Operator.AND);
-        released2pushed.setMultipleCondition(multipleCondition);
+        released2pushed.setCondition(multipleCondition);
 
 
         Transition pushed2released = new Transition();
@@ -70,7 +70,7 @@ public class Scenario_2 {
         multipleConditionReleased.addCondition(simpleButton1ReleasedCondition);
         multipleConditionReleased.addCondition(simpleButton2ReleasedCondition);
         multipleConditionReleased.addOperator(Operator.OR);
-        pushed2released.setMultipleCondition(multipleConditionReleased);
+        pushed2released.setCondition(multipleConditionReleased);
 
         buttons_released.setTransition(released2pushed);
         buttons_pushed.setTransition(pushed2released);      // Building the App

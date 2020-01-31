@@ -79,7 +79,7 @@ public class ToWiring extends Visitor<StringBuffer> {
 	public void visit(Transition transition) {
 
 		w_in("if( ");
-		transition.getMultipleCondition().accept(this);
+		transition.getCondition().accept(this);
 		w_in(" && guard ) { \n");
 
 		w("    time = millis();");
@@ -122,6 +122,21 @@ public class ToWiring extends Visitor<StringBuffer> {
 				Operator op = multipleCondition.getOperators().get(i);
 				stringBuilder.append((op == Operator.AND) ? " && " : " || ");
 			}
+		}
+		w_in(stringBuilder.toString());
+	}
+
+	@Override
+	public void visit(SimpleCondition simpleCondition){
+		StringBuilder stringBuilder = new StringBuilder();
+		if(simpleCondition.getSensorType().equals(BrickType.DIGITAL)){
+			stringBuilder.append(String.format("digitalRead(%d) == %s",
+					simpleCondition.getSens().getPin(), simpleCondition.getValue()));
+		}
+		else{
+			stringBuilder.append(String.format("analogRead(%d)",simpleCondition.getSens().getPin()));
+			stringBuilder.append(simpleCondition.getComparator());
+			stringBuilder.append(String.format("%s", simpleCondition.getValue()));
 		}
 		w_in(stringBuilder.toString());
 	}

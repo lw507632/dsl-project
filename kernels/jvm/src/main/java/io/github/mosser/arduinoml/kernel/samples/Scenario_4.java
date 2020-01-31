@@ -37,8 +37,6 @@ public class Scenario_4 {
 
 
         SimpleCondition simpleConditionButtonOn = new SimpleCondition(Comparator.EQUALS, button1, "HIGH");
-        MultipleCondition multipleConditionButtonOn = new MultipleCondition();
-        multipleConditionButtonOn.addCondition(simpleConditionButtonOn);
 
 
         // Transitions
@@ -46,9 +44,9 @@ public class Scenario_4 {
         Transition buzz2led = new Transition();
         Transition led2initial = new Transition();
 
-        initial2buzz.setNext(buzzer_on).setMultipleCondition(multipleConditionButtonOn);
-        buzz2led.setNext(led_on).setMultipleCondition(multipleConditionButtonOn);
-        led2initial.setNext(initial).setMultipleCondition(multipleConditionButtonOn);
+        initial2buzz.setNext(buzzer_on).setCondition(simpleConditionButtonOn);
+        buzz2led.setNext(led_on).setCondition(simpleConditionButtonOn);
+        led2initial.setNext(initial).setCondition(simpleConditionButtonOn);
 
         initial.setTransition(initial2buzz);
         buzzer_on.setTransition(buzz2led);

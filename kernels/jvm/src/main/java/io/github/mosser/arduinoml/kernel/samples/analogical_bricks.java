@@ -39,9 +39,7 @@ public class analogical_bricks {
         Transition nofire2fire = new Transition();
         nofire2fire.setNext(fire);
         SimpleCondition simpleFireCondition = new SimpleCondition(Comparator.SUPERIOR, tempSensor, "22");
-        MultipleCondition multipleCondition = new MultipleCondition();
-        multipleCondition.addCondition(simpleFireCondition);
-        nofire2fire.setMultipleCondition(multipleCondition);
+        nofire2fire.setCondition(simpleFireCondition);
 
 
         Transition fire2nofire = new Transition();
@@ -49,7 +47,7 @@ public class analogical_bricks {
         SimpleCondition simpleNoFireCondition1 = new SimpleCondition(Comparator.INFERIOR, tempSensor, "57");
         MultipleCondition multipleCondition2 = new MultipleCondition();
         multipleCondition2.addCondition(simpleNoFireCondition1);
-        fire2nofire.setMultipleCondition(multipleCondition2);
+        fire2nofire.setCondition(multipleCondition2);
 
 
         // Binding transitions to states

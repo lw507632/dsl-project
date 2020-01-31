@@ -8,7 +8,7 @@ import io.github.mosser.arduinoml.kernel.structural.Operator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MultipleCondition implements Visitable {
+public class MultipleCondition extends Condition implements Visitable {
     private List<SimpleCondition> conditionList = new ArrayList<>();
     private List<Operator> operators = new ArrayList<>();
 

@@ -36,18 +36,16 @@ public class Scenario_3 {
 		// Creating transitions
 
 		SimpleCondition simpleConditionButtonOn = new SimpleCondition(Comparator.EQUALS, button, "HIGH");
-		MultipleCondition multipleCondition = new MultipleCondition();
-		multipleCondition.addCondition(simpleConditionButtonOn);
 
 
 		Transition on2off = new Transition();
 		on2off.setNext(on);
-		on2off.setMultipleCondition(multipleCondition);
+		on2off.setCondition(simpleConditionButtonOn);
 
 
 		Transition off2on = new Transition();
 		off2on.setNext(on);
-		off2on.setMultipleCondition(multipleCondition);
+		off2on.setCondition(simpleConditionButtonOn);
 
 
 		// Binding transitions to states

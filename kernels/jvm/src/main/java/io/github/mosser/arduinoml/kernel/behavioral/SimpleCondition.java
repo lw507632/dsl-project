@@ -1,10 +1,12 @@
 package io.github.mosser.arduinoml.kernel.behavioral;
 
+import io.github.mosser.arduinoml.kernel.generator.Visitable;
+import io.github.mosser.arduinoml.kernel.generator.Visitor;
 import io.github.mosser.arduinoml.kernel.structural.Sensor;
 import io.github.mosser.arduinoml.kernel.structural.BrickType;
 import io.github.mosser.arduinoml.kernel.structural.ValueType;
 
-public class SimpleCondition {
+public class SimpleCondition extends Condition implements Visitable {
     private Comparator comparator;
     private Sensor sens;
     private String value;
@@ -52,5 +54,10 @@ public class SimpleCondition {
 
     public BrickType getSensorType(){
         return this.sens.getType();
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }
