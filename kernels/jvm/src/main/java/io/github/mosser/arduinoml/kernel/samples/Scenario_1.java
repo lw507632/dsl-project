@@ -15,11 +15,11 @@ public class Scenario_1 {
 		// Declaring elementary bricks
 		Sensor button = new Sensor();
 		button.setName("button");
-		button.setPin(9);
+		button.setPin(12);
 
 		Actuator led = new Actuator();
 		led.setName("LED");
-		led.setPin(12);
+		led.setPin(9);
 
 		Actuator buzzer = new Actuator();
 		buzzer.setName("BUZZER");

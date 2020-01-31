@@ -19,6 +19,9 @@ public class analogical_bricks {
         State no_fire = new State();
         no_fire.setName("no_fire");
 
+        State disable_alarm = new State();
+        disable_alarm.setName("disable");
+
         State fire = new State();
         fire.setName("fire");
 
@@ -33,32 +36,31 @@ public class analogical_bricks {
 
         // Binding actions to states
         fire.setActions(Arrays.asList(switchTheAlarmOn));
-        no_fire.setActions(Arrays.asList(switchTheAlarmOff));
+        disable_alarm.setActions(Arrays.asList(switchTheAlarmOff));
 
         // Creating transitions
         Transition nofire2fire = new Transition();
         nofire2fire.setNext(fire);
-        SimpleCondition simpleFireCondition = new SimpleCondition(Comparator.SUPERIOR, tempSensor, "22");
+        SimpleCondition simpleFireCondition = new SimpleCondition(Comparator.SUPERIOR, tempSensor, "50");
         nofire2fire.setCondition(simpleFireCondition);
 
 
         Transition fire2nofire = new Transition();
-        fire2nofire.setNext(no_fire);
-        SimpleCondition simpleNoFireCondition1 = new SimpleCondition(Comparator.INFERIOR, tempSensor, "57");
-        MultipleCondition multipleCondition2 = new MultipleCondition();
-        multipleCondition2.addCondition(simpleNoFireCondition1);
-        fire2nofire.setCondition(multipleCondition2);
+        fire2nofire.setNext(disable_alarm);
+        SimpleCondition simpleNoFireCondition1 = new SimpleCondition(Comparator.INFERIOR_OR_EQUALS, tempSensor, "50");
+        fire2nofire.setCondition(simpleNoFireCondition1);
 
 
         // Binding transitions to states
-        fire.setTransition(fire2nofire);
+        no_fire.setTransition(fire2nofire);
         no_fire.setTransition(nofire2fire);
+        fire.setTransition(fire2nofire);
 
         // Building the App
         App theSwitch = new App();
         theSwitch.setName("Scenario 1!");
         theSwitch.setBricks(Arrays.asList(tempSensor, led));
-        theSwitch.setStates(Arrays.asList(fire, no_fire));
+        theSwitch.setStates(Arrays.asList(fire, no_fire, disable_alarm));
         theSwitch.setInitial(no_fire);
 
         // Generating Code

@@ -13,8 +13,8 @@ public class Scenario_3 {
 	public static void main(String[] args) {
 
 		// Declaring elementary bricks
-		Sensor button = new Sensor("button", 9, BrickType.DIGITAL);
-		Actuator led = new Actuator("LED",12);
+		Sensor button = new Sensor("button", 12, BrickType.DIGITAL);
+		Actuator led = new Actuator("LED",9);
 
 		// Declaring states
 		State on = new State("on");
@@ -39,7 +39,7 @@ public class Scenario_3 {
 
 
 		Transition on2off = new Transition();
-		on2off.setNext(on);
+		on2off.setNext(off);
 		on2off.setCondition(simpleConditionButtonOn);
 
 

@@ -26,6 +26,10 @@ public class SimpleCondition extends Condition implements Visitable {
                 return "<";
             case SUPERIOR:
                 return ">";
+            case INFERIOR_OR_EQUALS:
+                return "<=";
+            case SUPERIOR_OR_EQUALS:
+                return ">=";
             case EQUALS:
                 return "==";
         }

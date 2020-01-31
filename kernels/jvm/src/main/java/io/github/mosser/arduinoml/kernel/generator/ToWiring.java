@@ -30,6 +30,7 @@ public class ToWiring extends Visitor<StringBuffer> {
 		w(String.format("// Application name: %s\n", app.getName()));
 
 		w("void setup(){");
+		w("  Serial.begin(9600);");
 		for(Brick brick: app.getBricks()){
 			brick.accept(this);
 		}
@@ -70,8 +71,8 @@ public class ToWiring extends Visitor<StringBuffer> {
 			w("  boolean guard = millis() - time > debounce;");
 			context.put(CURRENT_STATE, state);
 			state.getTransition().accept(this);
-			w("}\n");
 		}
+		w("}\n");
 
 	}
 
@@ -104,34 +105,24 @@ public class ToWiring extends Visitor<StringBuffer> {
 
 	@Override
 	public void visit(MultipleCondition multipleCondition){
-		StringBuilder stringBuilder = new StringBuilder();
 		List<SimpleCondition> simpleConditionList = multipleCondition.getConditionList();
 		for(int i=0; i< multipleCondition.getConditionList().size(); ++i){
 			SimpleCondition simpleCondition = simpleConditionList.get(i);
-			if(simpleCondition.getSensorType().equals(BrickType.DIGITAL)){
-				stringBuilder.append(String.format("digitalRead(%d) == %s",
-						simpleCondition.getSens().getPin(), simpleCondition.getValue()));
-			}
-			else{
-				stringBuilder.append(String.format("analogRead(%d)",simpleCondition.getSens().getPin()));
-				stringBuilder.append(simpleCondition.getComparator());
-				stringBuilder.append(String.format("%s", simpleCondition.getValue()));
-			}
+			simpleCondition.accept(this);
 
 			if(multipleCondition.getOperators().size() > i) {
 				Operator op = multipleCondition.getOperators().get(i);
-				stringBuilder.append((op == Operator.AND) ? " && " : " || ");
+				w_in((op == Operator.AND) ? " && " : " || ");
 			}
 		}
-		w_in(stringBuilder.toString());
 	}
 
 	@Override
 	public void visit(SimpleCondition simpleCondition){
 		StringBuilder stringBuilder = new StringBuilder();
 		if(simpleCondition.getSensorType().equals(BrickType.DIGITAL)){
-			stringBuilder.append(String.format("digitalRead(%d) == %s",
-					simpleCondition.getSens().getPin(), simpleCondition.getValue()));
+				stringBuilder.append(String.format("digitalRead(%d) == %s",
+						simpleCondition.getSens().getPin(), simpleCondition.getValue()));
 		}
 		else{
 			stringBuilder.append(String.format("analogRead(%d)",simpleCondition.getSens().getPin()));

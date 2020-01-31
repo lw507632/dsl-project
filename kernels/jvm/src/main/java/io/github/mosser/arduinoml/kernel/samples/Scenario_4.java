@@ -14,9 +14,9 @@ import java.util.Arrays;
 public class Scenario_4 {
     public static void main(String[] args) {
         // Declaring elementary bricks
-        Sensor button1 = new Sensor("BUTTON1", 9);
-        Actuator buzzer = new Actuator("BUZZER", 12);
-        Actuator led = new Actuator("LED", 11);
+        Sensor button1 = new Sensor("BUTTON1", 12);
+        Actuator buzzer = new Actuator("BUZZER", 9);
+        Actuator led = new Actuator("LED", 8);
 
         // Declaring states
         State initial = new State("initial");
