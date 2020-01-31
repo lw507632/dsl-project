@@ -1,5 +1,6 @@
 package saucegang.dsl
 
+import io.github.mosser.arduinoml.kernel.structural.Operator
 import io.github.mosser.arduinoml.kernel.structural.SIGNAL
 import org.codehaus.groovy.control.CompilerConfiguration
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer
@@ -21,6 +22,8 @@ class SauceGangDSL {
         shell = new GroovyShell(configuration)
         binding.setVariable("high", SIGNAL.HIGH)
         binding.setVariable("low", SIGNAL.LOW)
+        binding.setVariable("and", Operator.AND)
+        binding.setVariable("or", Operator.OR)
     }
 
     private static CompilerConfiguration getDSLConfiguration() {
