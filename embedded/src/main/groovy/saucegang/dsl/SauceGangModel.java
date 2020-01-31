@@ -53,10 +53,10 @@ class SauceGangModel {
         this.binding.setVariable(name, state);
     }
 
-    public void createTransition(State from, State to, MultipleCondition multipleCondition) {
+    public void createTransition(State from, State to, Condition condition) {
         Transition transition = new Transition();
         transition.setNext(to);
-        transition.setCondition(multipleCondition);
+        transition.setCondition(condition);
         from.setTransition(transition);
     }
 

@@ -1,6 +1,9 @@
 package saucegang.dsl
 
 import io.github.mosser.arduinoml.kernel.behavioral.Action
+import io.github.mosser.arduinoml.kernel.behavioral.Comparator
+import io.github.mosser.arduinoml.kernel.behavioral.Condition
+import io.github.mosser.arduinoml.kernel.behavioral.SimpleCondition
 import io.github.mosser.arduinoml.kernel.structural.Actuator
 import io.github.mosser.arduinoml.kernel.structural.SIGNAL
 import io.github.mosser.arduinoml.kernel.behavioral.State
@@ -45,12 +48,12 @@ abstract class SauceGangBaseScript extends Script {
                     ((SauceGangBinding) this.getBinding()).getSauceGangModel().createTransition(
                             state1 instanceof String ? (State) ((SauceGangBinding) this.getBinding()).getVariable(state1) : (State) state1,
                             state2 instanceof String ? (State) ((SauceGangBinding) this.getBinding()).getVariable(state2) : (State) state2,
-                            sensor instanceof String ? (Sensor) ((SauceGangBinding) this.getBinding()).getVariable(sensor) : (Sensor) sensor,
-                            signal instanceof String ? (SIGNAL) ((SauceGangBinding) this.getBinding()).getVariable(signal) : (SIGNAL) signal)
+                            createCondition(sensor instanceof String ? (Sensor) ((SauceGangBinding) this.getBinding()).getVariable(sensor) : (Sensor) sensor,
+                            (String) signal));
                 }]
             }]
         }]
-    }
+    };
     // export name
     def export(String name) {
         println(((SauceGangBinding) this.getBinding()).getSauceGangModel().generateCode(name).toString())
@@ -66,6 +69,39 @@ abstract class SauceGangBaseScript extends Script {
             scriptBody()
         } else {
             println "Run method is disabled"
+        }
+    }
+
+    static def getComparator(String comparator){
+        if (comparator == ">"){
+            return Comparator.SUPERIOR
+        } else if (comparator == "<") {
+            return Comparator.INFERIOR
+        } else if (comparator == "<=") {
+            return Comparator.INFERIOR_OR_EQUALS
+        } else if (comparator == ">=") {
+            return Comparator.SUPERIOR_OR_EQUALS
+        } else if (comparator == "==") {
+            return Comparator.EQUALS
+        } else if (comparator == "!=") {
+            return Comparator.NEQUALS
+        } else {
+            throw new Exception("getComparator : comparator unknown")
+        }
+    }
+
+
+    def createCondition (Sensor sensor, String entry) {
+        println sensor
+        println entry
+        entry = entry.toLowerCase()
+        if (entry.equals("high") || entry.equals("low")){
+            println "if high or low"
+            return new SimpleCondition(Comparator.EQUALS, sensor, entry)
+        } else {
+            println "else..?"
+            entries = entry.split(" ")
+            return new SimpleCondition(getComparator(entries[0]), sensor, entries[1]);
         }
     }
 }
