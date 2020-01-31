@@ -13,6 +13,7 @@ public class SimpleCondition extends Condition implements Visitable {
     private ValueType valueType = ValueType.DIGITAL;
 
     public SimpleCondition(Comparator comparator, Sensor sens, String value) {
+        System.out.println("------------" + comparator.toString());
         this.comparator = comparator;
         this.sens = sens;
         this.value = value;
@@ -33,7 +34,7 @@ public class SimpleCondition extends Condition implements Visitable {
             case EQUALS:
                 return "==";
         }
-        return "==";
+        return "ERROR";
     }
 
     public void setComparator(Comparator comparator) {

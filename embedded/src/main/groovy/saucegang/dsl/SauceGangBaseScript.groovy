@@ -5,6 +5,7 @@ import io.github.mosser.arduinoml.kernel.behavioral.Comparator
 import io.github.mosser.arduinoml.kernel.behavioral.Condition
 import io.github.mosser.arduinoml.kernel.behavioral.SimpleCondition
 import io.github.mosser.arduinoml.kernel.structural.Actuator
+import io.github.mosser.arduinoml.kernel.structural.BrickType
 import io.github.mosser.arduinoml.kernel.structural.SIGNAL
 import io.github.mosser.arduinoml.kernel.behavioral.State
 import io.github.mosser.arduinoml.kernel.structural.Sensor
@@ -73,17 +74,17 @@ abstract class SauceGangBaseScript extends Script {
     }
 
     static def getComparator(String comparator){
-        if (comparator == ">"){
+        if (comparator.equals(">")){
             return Comparator.SUPERIOR
-        } else if (comparator == "<") {
+        } else if (comparator.equals("<")) {
             return Comparator.INFERIOR
-        } else if (comparator == "<=") {
+        } else if (comparator.equals("<=")) {
             return Comparator.INFERIOR_OR_EQUALS
-        } else if (comparator == ">=") {
+        } else if (comparator.equals(">=")) {
             return Comparator.SUPERIOR_OR_EQUALS
-        } else if (comparator == "==") {
+        } else if (comparator.equals("==")) {
             return Comparator.EQUALS
-        } else if (comparator == "!=") {
+        } else if (comparator.equals("!=")) {
             return Comparator.NEQUALS
         } else {
             throw new Exception("getComparator : comparator unknown")
@@ -99,8 +100,10 @@ abstract class SauceGangBaseScript extends Script {
             println "if high or low"
             return new SimpleCondition(Comparator.EQUALS, sensor, entry)
         } else {
+            sensor.setType(BrickType.ANALOGICAL)
             println "else..?"
             entries = entry.split(" ")
+            println getComparator(entries[0])
             return new SimpleCondition(getComparator(entries[0]), sensor, entries[1]);
         }
     }
