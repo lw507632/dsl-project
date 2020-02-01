@@ -19,6 +19,9 @@ public class SimpleCondition extends Condition implements Visitable {
         this.value = value;
     }
 
+    public SimpleCondition() {
+    }
+
     public String getComparator() {
         switch (comparator){
             case NEQUALS:
