@@ -13,22 +13,15 @@ App returns App:
 		conditions+=Condition (conditions+=Condition)*
 		transitions+=Transition (transitions+=Transition)*
 	'}';
-
-terminal PIN returns ecore::EInt:
-	(('1') ('0'..'2')) | ('1'..'5') | ('8'..'9'); //Arduino Uno Pins
 	
-terminal VALUE returns ecore::EString:
-	"HIGH" | "LOW" | INT;
+BRICK_VALUE returns ecore::EString:
+	("HIGH" | "LOW" | INT);
 	
 Brick returns Brick:
-	(Sensor | Actuator) name=EString ':' pin=PIN;
+	(Sensor | Actuator) (type=BrickType)? name=EString ':' pin=INT; //using terminal rule INT we can only use positive INT
 
 Condition returns Condition:
 	(SimpleCondition | MultipleCondition);
-	
-ConditionInline returns Condition:
-	(SimpleConditionInline)
-;
 
 EString returns ecore::EString:
 	STRING | ID;
@@ -43,9 +36,6 @@ State returns State:
 Transition returns Transition:
 	previous=[State|EString] '--' condition=[Condition|EString] '-->' next=[State|EString];
 	
-EIntAsEString returns ecore::EString:
-	STRING;
-	
 enum BrickType returns BrickType:
 				DIGITAL = 'DIGITAL' | ANALOGICAL = 'ANALOGICAL';
 
@@ -58,15 +48,15 @@ Actuator returns Actuator:
 	'Actuator';
 
 Action returns Action:
-	actuator=[Actuator|EString]? ':=' (value=EString);
+	actuator=[Actuator|EString]? ':=' (value=BRICK_VALUE);
 
 SimpleCondition returns SimpleCondition:
 	'Condition' name=EString ':'
-		(sensor=[Sensor|EString] 'is' (comparator=COMPARATOR)? value=EString);
+		(sensor=[Sensor|EString] 'is' (comparator=COMPARATOR)? value=BRICK_VALUE);
 
 SimpleConditionInline returns SimpleCondition:
 	{SimpleCondition}
-	sensor=[Sensor|EString]? 'is' (comparator=COMPARATOR)? (value=EString);
+	sensor=[Sensor|EString]? 'is' (comparator=COMPARATOR)? (value=BRICK_VALUE);
 
 MultipleCondition returns MultipleCondition:
 	'Condition' name=EString ':'
@@ -74,7 +64,9 @@ MultipleCondition returns MultipleCondition:
 	 (operators+=OPERATOR conditions+=SimpleConditionInline)*;
 
 enum COMPARATOR returns COMPARATOR:
-				EQUALS = '==' | NON_EQUALS = '!=' | SUPERIOR = '>' | INFERIOR = '<' | SUPERIOR_OR_EQUALS = '>=' | INFERIOR_OR_EQUALS = '<=';
+				EQUALS = '==' | NON_EQUALS = '!=' | SUPERIOR = '>' | INFERIOR = '<' | SUPERIOR_OR_EQUALS = '>=' | INFERIOR_OR_EQUALS = '<='
+				| EQUALS = 'EQUALS' | NON_EQUALS = "NON_EQUALS" | SUPERIOR = "SUPERIOR" | INFERIOR = "INFERIOR" 
+				| INFERIOR_OR_EQUALS = "INFERIOR_OR_EQUALS" | SUPERIOR_OR_EQUALS = "SUPERIOR_OR_EQUALS";
 
 enum OPERATOR returns OPERATOR:
 				AND = 'AND' | OR = 'OR';
