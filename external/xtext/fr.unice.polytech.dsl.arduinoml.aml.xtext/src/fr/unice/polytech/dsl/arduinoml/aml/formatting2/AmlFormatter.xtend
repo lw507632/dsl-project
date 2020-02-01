@@ -25,15 +25,15 @@ class AmlFormatter extends AbstractFormatter2 {
 		for (condition : app.conditions) {
 			condition.format
 		}
+		for (transition : app.transitions) {
+			transition.format
+		}
 	}
 
 	def dispatch void format(State state, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		for (action : state.actions) {
 			action.format
-		}
-		for (transition : state.transitions) {
-			transition.format
 		}
 	}
 	
