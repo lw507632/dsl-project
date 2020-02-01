@@ -2,7 +2,8 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="arduinoml" nsURI="http://www.example.org/arduinoml" nsPrefix="arduinoml">
   <eClassifiers xsi:type="ecore:EClass" name="NamedElement" abstract="true">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral=""/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="App" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="bricks" lowerBound="1"
@@ -16,6 +17,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Brick" abstract="true" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="pin" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//BrickType"
+        defaultValueLiteral="DIGITAL"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Sensor" eSuperTypes="#//Brick"/>
   <eClassifiers xsi:type="ecore:EClass" name="Actuator" eSuperTypes="#//Brick"/>
@@ -32,25 +35,38 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="transitions" upperBound="-1"
         eType="#//Transition"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Condition" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="sensors" lowerBound="1"
-        upperBound="-1" eType="#//Sensor"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="values" unique="false"
-        lowerBound="1" upperBound="-1" eType="#//SIGNAL"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operators" unique="false"
-        upperBound="-1" eType="#//OPERATOR"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Condition" abstract="true" eSuperTypes="#//NamedElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="Action" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="actuator" lowerBound="1"
         eType="#//Actuator"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="#//SIGNAL"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="SIGNAL">
-    <eLiterals name="HIGH"/>
-    <eLiterals name="LOW" value="1"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="OPERATOR">
     <eLiterals name="AND"/>
     <eLiterals name="OR" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SimpleCondition" eSuperTypes="#//Condition">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="comparator" eType="#//COMPARATOR"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sensor" lowerBound="1"
+        eType="#//Sensor"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="COMPARATOR">
+    <eLiterals name="EQUALS"/>
+    <eLiterals name="NON_EQUALS" value="1"/>
+    <eLiterals name="SUPERIOR" value="2" literal=">"/>
+    <eLiterals name="INFERIOR" value="3" literal="&lt;"/>
+    <eLiterals name="SUPERIOR_OR_EQUALS" value="4" literal=">="/>
+    <eLiterals name="INFERIOR_OR_EQUALS" value="5" literal="&lt;="/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="BrickType">
+    <eLiterals name="DIGITAL"/>
+    <eLiterals name="ANALOGICAL" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MultipleCondition" eSuperTypes="#//Condition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="conditions" lowerBound="1"
+        upperBound="-1" eType="#//SimpleCondition" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operators" lowerBound="1"
+        upperBound="-1" eType="#//OPERATOR"/>
   </eClassifiers>
 </ecore:EPackage>
