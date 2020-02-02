@@ -27,8 +27,9 @@ import fr.unice.polytech.dsl.arduinoml.homemade.ArduinomlSwitchPrinter;
 
 public class Main {
 	public static void main(String[] args) {
-		String modelPath = "resources/FirstExample.aml";
-		String destinationPath= "resources/FirstExample.xmi";
+		String defaultRessource = "resources/FirstExample.aml";
+		String modelPath = (args[0] != null ? args[0] : defaultRessource);
+		String destinationPath= (args[0] != null ? args[0].replace(".aml", ".xmi") : "resources/FirstExample.xmi");
 		String code ="";
 		try {
 			ArduinoML2xmi(modelPath, destinationPath);

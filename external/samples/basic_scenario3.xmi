@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ASCII"?>
+<arduinoml:App xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:arduinoml="http://www.example.org/arduinoml" name="app">
+  <bricks xsi:type="arduinoml:Sensor" name="button" pin="12"/>
+  <bricks xsi:type="arduinoml:Actuator"/>
+  <states name="initial">
+    <actions value="LOW">
+      <actuator href="samples/basic_scenario3.aml#|0"/>
+    </actions>
+    <actions value="LOW">
+      <actuator href="samples/basic_scenario3.aml#|1"/>
+    </actions>
+  </states>
+  <states name="buzzer_on">
+    <actions value="HIGH">
+      <actuator href="samples/basic_scenario3.aml#|2"/>
+    </actions>
+  </states>
+  <states name="light_on">
+    <actions value="HIGH">
+      <actuator href="samples/basic_scenario3.aml#|3"/>
+    </actions>
+    <actions value="LOW">
+      <actuator href="samples/basic_scenario3.aml#|4"/>
+    </actions>
+  </states>
+  <conditions xsi:type="arduinoml:SimpleCondition" name="button_pushed" value="HIGH" sensor="//@bricks.0"/>
+  <transitions next="//@states.1" condition="//@conditions.0" previous="//@states.0"/>
+  <transitions next="//@states.2" condition="//@conditions.0" previous="//@states.1"/>
+  <transitions next="//@states.0" condition="//@conditions.0" previous="//@states.2"/>
+</arduinoml:App>

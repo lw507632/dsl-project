@@ -1,0 +1,16 @@
+App app {
+	Sensor button : 12
+
+	Actuator led : 9
+	Actuator buzzer : 8
+
+	State initial : led := LOW, buzzer := LOW
+	State buzzer_on : buzzer := HIGH
+	State light_on : led := HIGH, buzzer := LOW
+
+	Condition button_pushed : button is HIGH
+
+	initial -- button_pushed --> buzzer_on
+	buzzer_on -- button_pushed --> light_on
+	light_on -- button_pushed --> initial
+}

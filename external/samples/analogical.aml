@@ -1,0 +1,13 @@
+App app {
+	Sensor ANALOGICAL rotation : 1
+	Actuator ANALOGICAL led : 9
+	
+	State initial : led := 0
+	State light_on : led := 50
+	
+	Condition turned : rotation is >= 50
+	Condition n_turned : rotation is < 50
+	
+	initial -- turned --> light_on
+	light_on -- n_turned --> initial
+}
