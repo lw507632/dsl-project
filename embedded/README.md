@@ -6,7 +6,7 @@ Le script build est utilisé pour construire le module embedded. Il est utilisé
 
 ## Le script test.sh est utilisé pour construire le module et exécuté un scénario.
 #### La commande pour lancer un scénario :  ./test.sh [scénario]
-Example : ./test.sh scripts/verySimpleAlarmScenario.groovy
+Example :```sh  ./test.sh scripts/verySimpleAlarmScenario.groovy ```
 
 Dans le cas d'un problème de compilation, veuillez compiler le kernel et ré-essayez : 
 
