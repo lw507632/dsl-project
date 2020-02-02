@@ -1,16 +1,16 @@
-App app{
-	Sensor button : 10
-	Sensor button2 : 9
-	Actuator a1 : 11
-	Actuator a2 : 12
+App app {
+	Sensor ANALOGICAL rotation : 1
+	Actuator ANALOGICAL led : 9
 	
-	State initial : a1 => LOW, a2 => LOW
-	State a1_on : a1 => HIGH
-	State a2_on : a2 => HIGH, a1 => LOW
+	State initial : led := 0
+	State light_on : led := 50
 	
-	Condition c1 : button is HIGH AND button2 is HIGH
+	Condition turned : rotation is >= 50
+	Condition n_turned : rotation is < 50
 	
-	initial -- c1 --> a1_on
-	a1_on -- c1 --> a2_on
-	a2_on -- c1 --> initial
+	initial -- turned --> light_on
+	light_on -- n_turned --> initial
 }
+
+
+

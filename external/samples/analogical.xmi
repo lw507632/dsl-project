@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ASCII"?>
+<arduinoml:App xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:arduinoml="http://www.example.org/arduinoml" name="app">
+  <bricks xsi:type="arduinoml:Sensor" name="rotation" pin="1" type="ANALOGICAL"/>
+  <bricks xsi:type="arduinoml:Actuator" name="led" pin="9" type="ANALOGICAL"/>
+  <states name="initial">
+    <actions actuator="//@bricks.1" value="0"/>
+  </states>
+  <states name="light_on">
+    <actions actuator="//@bricks.1" value="50"/>
+  </states>
+  <conditions xsi:type="arduinoml:SimpleCondition" name="turned" value="50" comparator=">=" sensor="//@bricks.0"/>
+  <conditions xsi:type="arduinoml:SimpleCondition" name="n_turned" value="50" comparator="&lt;" sensor="//@bricks.0"/>
+  <transitions next="//@states.1" condition="//@conditions.0" previous="//@states.0"/>
+  <transitions next="//@states.0" condition="//@conditions.1" previous="//@states.1"/>
+</arduinoml:App>

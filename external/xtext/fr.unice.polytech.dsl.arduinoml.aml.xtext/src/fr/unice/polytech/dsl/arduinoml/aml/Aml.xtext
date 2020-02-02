@@ -14,7 +14,7 @@ App returns App:
 		transitions+=Transition (transitions+=Transition)*
 	'}';
 	
-BRICK_VALUE returns ecore::EString:
+BRICK_VALUE returns ecore::EString: //As bricks values are String in the model, this parser rule is used to limit possibilities
 	("HIGH" | "LOW" | INT);
 	
 Brick returns Brick:
@@ -28,10 +28,7 @@ EString returns ecore::EString:
 
 State returns State:
 	{State}
-	'State'
-	name=EString
-	':'
-		(actions+=Action ( ',' actions+=Action)*)?;
+	'State' name=EString ':' (actions+=Action ( ',' actions+=Action)*)?;
 
 Transition returns Transition:
 	previous=[State|EString] '--' condition=[Condition|EString] '-->' next=[State|EString];
