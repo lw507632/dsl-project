@@ -18,6 +18,16 @@ Chaque module contient un fichier README expliquant le module et comment l'éxec
 
 example : ./test.sh scripts/verySimpleAlarmScenario.groovy
 
+Dans le cas d'un problème de compilation, veuillez compiler le kernel et ré-essayez : 
+
+--> cd ../kernels/jvm
+
+--> mvn clean install
+
+--> cd ../../embedded
+
+--> ./test.sh [scénario]
+
 ## Execution external
 
 > Go to the exernal/ folder.
