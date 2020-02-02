@@ -12,21 +12,33 @@ Chaque module contient un fichier README expliquant le module et comment l'éxec
 
 ## Execution de Embedded: 
 
---> cd embedded
+```sh 
+	cd embedded
+```
 
---> ./test.sh [scénario]  
+```sh 
+	./test.sh [scénario]  
+```
 
 example : ./test.sh scripts/verySimpleAlarmScenario.groovy
 
 Dans le cas d'un problème de compilation, veuillez compiler le kernel et ré-essayez : 
 
---> cd ../kernels/jvm
+```sh 
+	cd ../kernels/jvm
+```
 
---> mvn clean install
+```sh 
+	mvn clean install
+```
 
---> cd ../../embedded
+```sh 
+	cd ../../embedded
+```
 
---> ./test.sh [scénario]
+```sh 
+	./test.sh [scénario]
+```
 
 ## Execution external
 
