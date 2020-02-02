@@ -4,12 +4,12 @@
 
 sensor "button" onPin 9
 actuator "led" pin 12
-actuator "buzzer" pin 13
-state "noise" means "led" becomes "low" and "buzzer" becomes "high"
-state "light" means "led" becomes "high" and "buzzer" becomes "low"
-state "initialState" means "led" becomes "low" and "buzzer" becomes "low"
+actuator "buzzer" pin 11
+state "noise" means "led" becomes "LOW" and "buzzer" becomes "HIGH"
+state "light" means "led" becomes "HIGH" and "buzzer" becomes "LOW"
+state "initialState" means "led" becomes "LOW" and "buzzer" becomes "LOW"
 initial "initialState"
-from "initialState" to "noise" when "button" becomes "high"
-from "noise" to "light" when "button" becomes "low"
-from "light" to "noise" when "button" becomes "high"
+from "initialState" to "noise" when "button" becomes "HIGH"
+from "noise" to "light" when "button" becomes "HIGH"
+from "light" to "initialState" when "button" becomes "HIGH"
 export "Multi state Alarm!"
