@@ -4,12 +4,12 @@
 
 sensor "buttonLeft" onPin 8
 sensor "buttonRight" onPin 9
-actuator "buzzer" pin 12
-state "on" means "buzzer" becomes "high"
-state "off" means "buzzer" becomes "low"
+actuator "buzzer" pin 11
+state "on" means "buzzer" becomes "HIGH"
+state "off" means "buzzer" becomes "LOW"
 initial "off"
-from "off" to "on" when "buttonLeft" becomes "high" and "buttonRight" becomes "high"
-from "on" to "off" when "buttonLeft" becomes "low" and "buttonRight" becomes "high"
-from "on" to "off" when "buttonLeft" becomes "high" and "buttonRight" becomes "low"
-from "on" to "off" when "buttonLeft" becomes "low" and "buttonRight" becomes "low"
+from "off" to "on" when "buttonLeft" becomes "HIGH" and "buttonRight" becomes "HIGH"
+from "on" to "off" when "buttonLeft" becomes "LOW" and "buttonRight" becomes "HIGH"
+from "on" to "off" when "buttonLeft" becomes "HIGH" and "buttonRight" becomes "LOW"
+from "on" to "off" when "buttonLeft" becomes "LOW" and "buttonRight" becomes "LOW"
 export "Dual-Check alarm!"
