@@ -1,7 +1,5 @@
 package fr.unice.polytech.dsl.arduinoml.homemade;
 
-import java.util.List;
-
 import org.eclipse.emf.ecore.EObject;
 
 import fr.unice.polytech.dsl.arduinoml.Action;
@@ -10,8 +8,10 @@ import fr.unice.polytech.dsl.arduinoml.App;
 import fr.unice.polytech.dsl.arduinoml.ArduinomlPackage;
 import fr.unice.polytech.dsl.arduinoml.Brick;
 import fr.unice.polytech.dsl.arduinoml.Condition;
+import fr.unice.polytech.dsl.arduinoml.MultipleCondition;
 import fr.unice.polytech.dsl.arduinoml.NamedElement;
 import fr.unice.polytech.dsl.arduinoml.Sensor;
+import fr.unice.polytech.dsl.arduinoml.SimpleCondition;
 import fr.unice.polytech.dsl.arduinoml.State;
 import fr.unice.polytech.dsl.arduinoml.Transition;
 import fr.unice.polytech.dsl.arduinoml.util.ArduinomlSwitch;
@@ -58,7 +58,12 @@ public class ArduinomlSwitchPrinter extends ArduinomlSwitch<String> {
 		return "";
 	}
 	
-	public String caseCondition(Condition condition) {
+	public String caseCondition(SimpleCondition condition) {
+		converter.convert(condition);
+		return "";
+	}
+	
+	public String caseCondition(MultipleCondition condition) {
 		converter.convert(condition);
 		return "";
 	}

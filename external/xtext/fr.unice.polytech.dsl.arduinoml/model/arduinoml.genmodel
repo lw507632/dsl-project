@@ -10,13 +10,21 @@
   <testsDirectory xsi:nil="true"/>
   <genPackages prefix="Arduinoml" basePackage="fr.unice.polytech.dsl" disposableProviderFactory="true"
       ecorePackage="arduinoml.ecore#/">
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="arduinoml.ecore#//SIGNAL">
-      <genEnumLiterals ecoreEnumLiteral="arduinoml.ecore#//SIGNAL/HIGH"/>
-      <genEnumLiterals ecoreEnumLiteral="arduinoml.ecore#//SIGNAL/LOW"/>
-    </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="arduinoml.ecore#//OPERATOR">
       <genEnumLiterals ecoreEnumLiteral="arduinoml.ecore#//OPERATOR/AND"/>
       <genEnumLiterals ecoreEnumLiteral="arduinoml.ecore#//OPERATOR/OR"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="arduinoml.ecore#//COMPARATOR">
+      <genEnumLiterals ecoreEnumLiteral="arduinoml.ecore#//COMPARATOR/EQUALS"/>
+      <genEnumLiterals ecoreEnumLiteral="arduinoml.ecore#//COMPARATOR/NON_EQUALS"/>
+      <genEnumLiterals ecoreEnumLiteral="arduinoml.ecore#//COMPARATOR/SUPERIOR"/>
+      <genEnumLiterals ecoreEnumLiteral="arduinoml.ecore#//COMPARATOR/INFERIOR"/>
+      <genEnumLiterals ecoreEnumLiteral="arduinoml.ecore#//COMPARATOR/SUPERIOR_OR_EQUALS"/>
+      <genEnumLiterals ecoreEnumLiteral="arduinoml.ecore#//COMPARATOR/INFERIOR_OR_EQUALS"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="arduinoml.ecore#//BrickType">
+      <genEnumLiterals ecoreEnumLiteral="arduinoml.ecore#//BrickType/DIGITAL"/>
+      <genEnumLiterals ecoreEnumLiteral="arduinoml.ecore#//BrickType/ANALOGICAL"/>
     </genEnums>
     <genClasses ecoreClass="arduinoml.ecore#//NamedElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute arduinoml.ecore#//NamedElement/name"/>
@@ -29,6 +37,7 @@
     </genClasses>
     <genClasses ecoreClass="arduinoml.ecore#//Brick">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute arduinoml.ecore#//Brick/pin"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute arduinoml.ecore#//Brick/type"/>
     </genClasses>
     <genClasses ecoreClass="arduinoml.ecore#//Sensor"/>
     <genClasses ecoreClass="arduinoml.ecore#//Actuator"/>
@@ -41,14 +50,19 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference arduinoml.ecore#//State/actions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference arduinoml.ecore#//State/transitions"/>
     </genClasses>
-    <genClasses ecoreClass="arduinoml.ecore#//Condition">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference arduinoml.ecore#//Condition/sensors"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute arduinoml.ecore#//Condition/values"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute arduinoml.ecore#//Condition/operators"/>
-    </genClasses>
+    <genClasses ecoreClass="arduinoml.ecore#//Condition"/>
     <genClasses ecoreClass="arduinoml.ecore#//Action">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference arduinoml.ecore#//Action/actuator"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute arduinoml.ecore#//Action/value"/>
+    </genClasses>
+    <genClasses ecoreClass="arduinoml.ecore#//SimpleCondition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute arduinoml.ecore#//SimpleCondition/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute arduinoml.ecore#//SimpleCondition/comparator"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference arduinoml.ecore#//SimpleCondition/sensor"/>
+    </genClasses>
+    <genClasses ecoreClass="arduinoml.ecore#//MultipleCondition">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference arduinoml.ecore#//MultipleCondition/conditions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute arduinoml.ecore#//MultipleCondition/operators"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
