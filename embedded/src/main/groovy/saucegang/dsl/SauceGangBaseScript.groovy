@@ -6,6 +6,7 @@ import io.github.mosser.arduinoml.kernel.behavioral.Condition
 import io.github.mosser.arduinoml.kernel.behavioral.MultipleCondition
 import io.github.mosser.arduinoml.kernel.behavioral.SimpleCondition
 import io.github.mosser.arduinoml.kernel.structural.Actuator
+import io.github.mosser.arduinoml.kernel.structural.BrickType
 import io.github.mosser.arduinoml.kernel.structural.Operator
 import io.github.mosser.arduinoml.kernel.structural.SIGNAL
 import io.github.mosser.arduinoml.kernel.behavioral.State
@@ -118,9 +119,11 @@ abstract class SauceGangBaseScript extends Script {
             println "if high or low"
             return new SimpleCondition(Comparator.EQUALS, sensor, entry)
         } else {
+            sensor.setType(BrickType.ANALOGICAL)
             println "else..?"
             entries = entry.split(" ")
-            return new SimpleCondition(getComparator(entries[0]), sensor, entries[1]);
+            SimpleCondition simpleCondition = new SimpleCondition(getComparator(entries[0]), sensor, entries[1]);
+            return simpleCondition
         }
     }
 
