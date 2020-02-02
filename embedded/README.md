@@ -10,20 +10,28 @@ Example : ./test.sh scripts/verySimpleAlarmScenario.groovy
 
 Dans le cas d'un problème de compilation, veuillez compiler le kernel et ré-essayez : 
 
---> cd ../kernels/jvm
+```sh 
+  cd ../kernels/jvm
+```
 
---> mvn clean install
+```sh
+  mvn clean install
+```
 
---> cd ../../embedded
+```sh
+  cd ../../embedded
+```
 
---> ./test.sh [scénario]
+```sh
+  ./test.sh [scénario]
+```
 
 #### Toutes les commandes possibles :
 
-very simple alarm scenario :  ./test.sh scripts/verySimpleAlarmScenario.groovy
+very simple alarm scenario :  ```sh ./test.sh scripts/verySimpleAlarmScenario.groovy ```
 
-multi state alarm scenario :  ./test.sh scripts/multiStateAlarmScenario.groovy
+multi state alarm scenario :  ```sh ./test.sh scripts/multiStateAlarmScenario.groovy ```
 
-dual check alarm scenario :   ./test.sh scripts/dualCheckAlarmScenario.groovy
+dual check alarm scenario :   ```sh ./test.sh scripts/dualCheckAlarmScenario.groovy ```
 
-state based alarm scenario :  ./test.sh scripts/stateBasedAlarmScenario.groovy
+state based alarm scenario :  ```sh ./test.sh scripts/stateBasedAlarmScenario.groovy ```
