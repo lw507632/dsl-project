@@ -14,4 +14,6 @@ Chaque module contient un fichier README expliquant le module et comment l'éxec
 
 --> cd embedded
 
---> ./test.sh [scénario]   example : scripts/verySimpleAlarmScenario.groovy
+--> ./test.sh [scénario]  
+
+example : ./test.sh scripts/verySimpleAlarmScenario.groovy
