@@ -20,8 +20,8 @@ class SauceGangDSL {
         configuration = getDSLConfiguration()
         configuration.setScriptBaseClass("saucegang.dsl.SauceGangBaseScript")
         shell = new GroovyShell(configuration)
-        binding.setVariable("high", SIGNAL.HIGH)
-        binding.setVariable("low", SIGNAL.LOW)
+        binding.setVariable("HIGH", SIGNAL.HIGH)
+        binding.setVariable("LOW", SIGNAL.LOW)
         binding.setVariable("and", Operator.AND)
         binding.setVariable("or", Operator.OR)
     }

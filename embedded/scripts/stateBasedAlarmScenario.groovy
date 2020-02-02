@@ -3,9 +3,9 @@
 
 sensor "button" onPin 9
 actuator "led" pin 12
-state "on" means "led" becomes "high"
-state "off" means "led" becomes "low"
+state "on" means "led" becomes "HIGH"
+state "off" means "led" becomes "LOW"
 initial "off"
-from "on" to "off" when "button" becomes "high"
-from "off" to "on" when "button" becomes "low"
+from "on" to "off" when "button" becomes "HIGH"
+from "off" to "on" when "button" becomes "HIGH"
 export "State based Alarm!"

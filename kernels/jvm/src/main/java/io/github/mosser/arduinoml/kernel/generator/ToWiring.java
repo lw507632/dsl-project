@@ -122,7 +122,7 @@ public class ToWiring extends Visitor<StringBuffer> {
 		StringBuilder stringBuilder = new StringBuilder();
 		if(simpleCondition.getSensorType().equals(BrickType.DIGITAL)){
 				stringBuilder.append(String.format("digitalRead(%d) == %s",
-						simpleCondition.getSens().getPin(), simpleCondition.getValue()));
+						simpleCondition.getSens().getPin(), simpleCondition.getValue().toUpperCase()));
 		}
 		else{
 			stringBuilder.append(String.format("analogRead(%d)",simpleCondition.getSens().getPin()));
