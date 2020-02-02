@@ -3,9 +3,10 @@ package saucegang.dsl
 import io.github.mosser.arduinoml.kernel.behavioral.Action
 import io.github.mosser.arduinoml.kernel.behavioral.Comparator
 import io.github.mosser.arduinoml.kernel.behavioral.Condition
+import io.github.mosser.arduinoml.kernel.behavioral.MultipleCondition
 import io.github.mosser.arduinoml.kernel.behavioral.SimpleCondition
 import io.github.mosser.arduinoml.kernel.structural.Actuator
-import io.github.mosser.arduinoml.kernel.structural.BrickType
+import io.github.mosser.arduinoml.kernel.structural.Operator
 import io.github.mosser.arduinoml.kernel.structural.SIGNAL
 import io.github.mosser.arduinoml.kernel.behavioral.State
 import io.github.mosser.arduinoml.kernel.structural.Sensor
@@ -41,20 +42,31 @@ abstract class SauceGangBaseScript extends Script {
     def initial(state) {
         ((SauceGangBinding) this.getBinding()).getSauceGangModel().setInitialState(state instanceof String ? (State) ((SauceGangBinding) this.getBinding()).getVariable(state) : (State) state)
     }
-    // from state1 to state2 when sensor becomes signal
+
     def from(state1) {
-        [to: { state2 ->
-            [when: { sensor ->
-                [becomes: { signal ->
-                    ((SauceGangBinding) this.getBinding()).getSauceGangModel().createTransition(
-                            state1 instanceof String ? (State) ((SauceGangBinding) this.getBinding()).getVariable(state1) : (State) state1,
-                            state2 instanceof String ? (State) ((SauceGangBinding) this.getBinding()).getVariable(state2) : (State) state2,
-                            createCondition(sensor instanceof String ? (Sensor) ((SauceGangBinding) this.getBinding()).getVariable(sensor) : (Sensor) sensor,
-                            (String) signal));
-                }]
+        MultipleCondition multipleCondition = new MultipleCondition();
+
+        def closure
+        closure = { sensor ->
+            [becomes: { signal ->
+                multipleCondition.addCondition(createCondition(sensor instanceof String ? (Sensor) ((SauceGangBinding) this.getBinding()).getVariable(sensor) : (Sensor) sensor,
+                        (String) signal))
+                if(multipleCondition.getConditionList().size() > 1){
+                    multipleCondition.addOperator(Operator.AND)
+                }
+                [and:  closure]
+
             }]
+        }
+        [to: { state2 ->
+            ((SauceGangBinding) this.getBinding()).getSauceGangModel().createTransition(
+                    state1 instanceof String ? (State) ((SauceGangBinding) this.getBinding()).getVariable(state1) : (State) state1,
+                    state2 instanceof String ? (State) ((SauceGangBinding) this.getBinding()).getVariable(state2) : (State) state2,
+                    multipleCondition);
+            [when: closure]
         }]
     };
+
     // export name
     def export(String name) {
         println(((SauceGangBinding) this.getBinding()).getSauceGangModel().generateCode(name).toString())
@@ -73,18 +85,24 @@ abstract class SauceGangBaseScript extends Script {
         }
     }
 
-    static def getComparator(String comparator){
-        if (comparator.equals(">")){
+    def getComparator(String comparator){
+        if (comparator == ">"){
+            println "getComparator >"
             return Comparator.SUPERIOR
-        } else if (comparator.equals("<")) {
+        } else if (comparator == "<") {
+            println "getComparator <"
             return Comparator.INFERIOR
-        } else if (comparator.equals("<=")) {
+        } else if (comparator == "<=") {
+            println "getComparator <="
             return Comparator.INFERIOR_OR_EQUALS
-        } else if (comparator.equals(">=")) {
+        } else if (comparator == ">=") {
+            println "getComparator >="
             return Comparator.SUPERIOR_OR_EQUALS
-        } else if (comparator.equals("==")) {
+        } else if (comparator == "==") {
+            println "getComparator =="
             return Comparator.EQUALS
-        } else if (comparator.equals("!=")) {
+        } else if (comparator == "!=") {
+            println "getComparator !="
             return Comparator.NEQUALS
         } else {
             throw new Exception("getComparator : comparator unknown")
@@ -100,11 +118,13 @@ abstract class SauceGangBaseScript extends Script {
             println "if high or low"
             return new SimpleCondition(Comparator.EQUALS, sensor, entry)
         } else {
-            sensor.setType(BrickType.ANALOGICAL)
             println "else..?"
             entries = entry.split(" ")
-            println getComparator(entries[0])
             return new SimpleCondition(getComparator(entries[0]), sensor, entries[1]);
         }
+    }
+
+    def createBigCondition() {
+
     }
 }

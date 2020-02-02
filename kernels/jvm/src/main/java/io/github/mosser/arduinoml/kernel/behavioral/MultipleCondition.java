@@ -29,6 +29,8 @@ public class MultipleCondition extends Condition implements Visitable {
         return conditionList;
     }
 
+
+
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);

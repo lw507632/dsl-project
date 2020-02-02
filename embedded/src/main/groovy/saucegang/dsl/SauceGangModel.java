@@ -56,10 +56,10 @@ class SauceGangModel {
     public void createTransition(State from, State to, Condition condition) {
         Transition transition = new Transition();
         transition.setNext(to);
-        System.out.println(((SimpleCondition)condition).getComparator());
         transition.setCondition(condition);
         from.setTransition(transition);
     }
+
 
     public void setInitialState(State state) {
         this.initialState = state;
